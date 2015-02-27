@@ -1,11 +1,14 @@
 package makosocial;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +23,18 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.parse.Parse;
+import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.vj.makosocial.R;
+
+import java.io.ByteArrayOutputStream;
+
+import java.util.Calendar;
+import java.util.Date;
 
 // Mike Penz lib
 
@@ -43,7 +54,12 @@ public class NavDrawerActivity extends ActionBarActivity {
         Parse.enableLocalDatastore(this);
         // init Parse session
         Parse.initialize(this, "vTOFv5b5IhCPhTrl0uqqCCXDiZSojjwt7FtzSMsU", "YAL4h7JMBz2gPClEnuQHXTyZv4R3YAnYV4Lt74JK");
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
 
+        defaultACL.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
+        /*
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground(new SaveCallback() {
@@ -56,7 +72,43 @@ public class NavDrawerActivity extends ActionBarActivity {
                     Toast.makeText(NavDrawerActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
             }
+        });*/
+
+        /*/uploading some db rows for test*************************
+        ParseObject makoEvent = new ParseObject("MakoEvent");
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.rahamim);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        // Compress image to lower quality scale 1 - 100
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] image = stream.toByteArray();
+
+        // Create the ParseFile
+        ParseFile file = new ParseFile("rahamim.png", image);
+        // Upload the image into Parse Cloud
+        file.saveInBackground();
+
+        makoEvent.put("Picture", file);
+        makoEvent.put("Name","Rahamim");
+
+        Date myDate = new Date();
+
+        makoEvent.put("StartDate",myDate);
+        makoEvent.put("NumLikes",0);
+        makoEvent.put("Description","He didn't know...");
+        makoEvent.put("Rating",5);
+        makoEvent.put("numRated",1);
+        makoEvent.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null)
+                    Toast.makeText(NavDrawerActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                else {
+                    e.printStackTrace();
+                    Toast.makeText(NavDrawerActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
+        //end uploading rows****************************/
 
 
         // Handle Toolbar
