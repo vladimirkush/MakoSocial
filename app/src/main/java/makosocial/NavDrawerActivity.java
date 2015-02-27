@@ -59,20 +59,7 @@ public class NavDrawerActivity extends ActionBarActivity {
 
         defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
-        /*
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-
-                if (e == null)
-                    Toast.makeText(NavDrawerActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                else {
-                    Toast.makeText(NavDrawerActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
+        
 
         /*/uploading some db rows for test*************************
         ParseObject makoEvent = new ParseObject("MakoEvent");
