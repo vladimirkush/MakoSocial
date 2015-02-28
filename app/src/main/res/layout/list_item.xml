@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:baselineAligned="false"
+              android:id="@+id/itemRLayout"
+    >
+
+    <ImageView
+        android:id="@+id/ivMainPic"
+        android:adjustViewBounds="true"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="2dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_pic"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etEventName"
+        android:text="EventName"
+        android:textColor="@android:color/black"
+        android:layout_alignTop="@+id/ivMainPic"
+        android:layout_toRightOf="@+id/ivMainPic"
+        android:layout_toEndOf="@+id/ivMainPic"
+        android:textSize="22sp"
+        />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:numStars="5"
+        android:rating="1"
+        android:stepSize="0.5"
+        android:layout_below="@+id/etEventName"
+        android:layout_alignLeft="@+id/etEventName"
+        android:layout_alignStart="@+id/etEventName"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etEventDescription"
+
+        android:text="EventDescription"
+        android:textColor="@android:color/darker_gray"
+
+        android:layout_alignBottom="@+id/ivMainPic"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/ivMainPic"
+        android:layout_toEndOf="@+id/ivMainPic"
+        android:layout_below="@+id/ratingBar"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/likesAndComments"
+        android:layout_above="@+id/etEventDescription"
+        android:layout_toRightOf="@+id/etEventName"
+        android:layout_toEndOf="@+id/etEventName"
+        android:layout_marginLeft="43dp"
+        android:layout_marginStart="43dp"
+        >
+
+
+        <ImageView
+            android:id="@+id/ivLike"
+            android:src="@drawable/like"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_width="24dp"
+            android:layout_height="27dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="5"
+            android:id="@+id/tvLikes"
+            android:textSize="17sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/ivComment"
+            android:src="@drawable/comment"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="5"
+            android:id="@+id/tvComments"
+            android:textSize="17sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+
+
+
+        </LinearLayout>
+</RelativeLayout>

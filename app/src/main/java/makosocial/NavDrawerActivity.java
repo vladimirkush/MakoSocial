@@ -59,7 +59,7 @@ public class NavDrawerActivity extends ActionBarActivity {
 
         defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
-        
+
 
         /*/uploading some db rows for test*************************
         ParseObject makoEvent = new ParseObject("MakoEvent");
