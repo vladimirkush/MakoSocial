@@ -1,5 +1,6 @@
 package makosocial;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +9,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.text.format.Time;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,23 +23,33 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.vj.makosocial.R;
 
-import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Calendar;
-import java.util.Date;
+import dbObjects.MakoEvent;
 
 // Mike Penz lib
 
 public class NavDrawerActivity extends ActionBarActivity {
+    private final String NAME_COL = "Name";
+    private final String DESCRIPTION_COL = "Description";
+    private final String NUM_LIKES_COL = "NumLikes";
+    private final String START_DATE_COL = "StartDate";
+    private final String RATING_COL = "Rating";
+    private final String NUM_RATED_COL = "numRated";
+    private final String PICTURE_COL = "Picture";
+
+    private final String PARSE_LOGCAT_TAG = "Parse";
 
     private Drawer.Result drawer_res;
     private Toolbar toolbar;
@@ -152,7 +163,7 @@ public class NavDrawerActivity extends ActionBarActivity {
                     }
                 }).build();
 
-
+        ArrayList<MakoEvent> mEventList = getMakoEvents();
     }
 
     @Override
@@ -206,6 +217,55 @@ public class NavDrawerActivity extends ActionBarActivity {
         shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
         shareIntent.setType("text/plain");
         return shareIntent;
+    }
+
+    private ArrayList<MakoEvent> getMakoEvents(){
+        // fetch objects from Mako side
+        // and return a list of MakoEvent objects
+        final ArrayList<MakoEvent> meList = new ArrayList<MakoEvent>();
+
+        ProgressDialog progressDialog = ProgressDialog.show(NavDrawerActivity.this, "",
+                "Fetching Mako data...", true);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("MakoEvent");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if(e==null){
+                    // creating list of MakoEvents
+                    for (ParseObject i :list) {
+                        MakoEvent mEvent = new MakoEvent();
+
+                        mEvent.setId(i.getObjectId());
+                        mEvent.setDescription(i.getString(DESCRIPTION_COL));
+                        mEvent.setLikes(i.getInt(NUM_LIKES_COL));
+                        mEvent.setName(i.getString(NAME_COL));
+                        mEvent.setRating(i.getDouble(RATING_COL));
+                        mEvent.setStartDate(i.getDate(START_DATE_COL));
+
+                        //get picture
+                        ParseFile file = (ParseFile) i.get(PICTURE_COL);
+                        try {
+                            byte[] picBytes = file.getData();
+                            Bitmap bmp = BitmapFactory.decodeByteArray(picBytes, 0,picBytes.length);
+                            mEvent.setPicture(bmp);
+                            Log.d(PARSE_LOGCAT_TAG, "Success in downloading picture");
+                        } catch (ParseException e1) {
+                            Log.d(PARSE_LOGCAT_TAG, "Error downloading picture");
+                        }
+
+                        meList.add(mEvent);
+                        Log.d(PARSE_LOGCAT_TAG, "added mEvent, id "+mEvent.getId());
+                    }
+
+
+                }else{
+                    Log.d(PARSE_LOGCAT_TAG,"Fetching error");
+                }
+            }
+        });
+
+        progressDialog.dismiss();
+        return  meList;
     }
 
 }

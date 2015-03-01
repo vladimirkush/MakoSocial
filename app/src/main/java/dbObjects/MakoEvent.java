@@ -1,5 +1,7 @@
 package dbObjects;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -10,13 +12,17 @@ public class MakoEvent {
     private String id;
     private String name;
     private double rating;
-    private String picture; // resource path
+    private Bitmap picture;
     private Date startDate;
     private int likes;
     private String description;
     private ArrayList<Comment> comments;
 
-    public MakoEvent(String id, String name, double rating, String picture, Date startDate,
+    public MakoEvent(){
+
+    }
+
+    public MakoEvent(String id, String name, double rating, Bitmap picture, Date startDate,
                      int likes, String description, ArrayList<Comment> comments) {
         this.id = id;
         this.name = name;
@@ -36,11 +42,11 @@ public class MakoEvent {
         this.rating = rating;
     }
 
-    public String getPicture() {
+    public Bitmap getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(Bitmap picture) {
         this.picture = picture;
     }
 
