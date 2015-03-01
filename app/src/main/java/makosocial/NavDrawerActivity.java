@@ -1,15 +1,11 @@
 package makosocial;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,17 +22,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.parse.Parse;
 import com.parse.ParseACL;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.vj.makosocial.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import adapters.ListViewMakoAdapter;
+import async.AsyncGetMakoEvents;
 import dbObjects.MakoEvent;
 
 // Mike Penz lib
@@ -62,53 +54,8 @@ public class NavDrawerActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
 
-        // test parse auth
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        // init Parse session
-        Parse.initialize(this, "vTOFv5b5IhCPhTrl0uqqCCXDiZSojjwt7FtzSMsU", "YAL4h7JMBz2gPClEnuQHXTyZv4R3YAnYV4Lt74JK");
-        ParseUser.enableAutomaticUser();
-        ParseACL defaultACL = new ParseACL();
+        parseInit();
 
-        defaultACL.setPublicReadAccess(true);
-        ParseACL.setDefaultACL(defaultACL, true);
-
-
-        /*/uploading some db rows for test*************************
-        ParseObject makoEvent = new ParseObject("MakoEvent");
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.rahamim);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        // Compress image to lower quality scale 1 - 100
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] image = stream.toByteArray();
-
-        // Create the ParseFile
-        ParseFile file = new ParseFile("rahamim.png", image);
-        // Upload the image into Parse Cloud
-        file.saveInBackground();
-
-        makoEvent.put("Picture", file);
-        makoEvent.put("Name","Rahamim");
-
-        Date myDate = new Date();
-
-        makoEvent.put("StartDate",myDate);
-        makoEvent.put("NumLikes",0);
-        makoEvent.put("Description","He didn't know...");
-        makoEvent.put("Rating",5);
-        makoEvent.put("numRated",1);
-        makoEvent.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null)
-                    Toast.makeText(NavDrawerActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                else {
-                    e.printStackTrace();
-                    Toast.makeText(NavDrawerActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        //end uploading rows****************************/
 
 
         // Handle Toolbar
@@ -164,11 +111,19 @@ public class NavDrawerActivity extends ActionBarActivity {
                         }
                     }
                 }).build();
-        // download entities from Parse
-        ArrayList<MakoEvent> mEventList = getMakoEvents();
-        // list view
+
+        //list view
         lvMakoEvents = (ListView) findViewById(R.id.lvMakoEvents);
-        lvMakoEvents.setAdapter(new ListViewMakoAdapter(mEventList, this));
+        //set adapter
+        ListViewMakoAdapter adapter = new ListViewMakoAdapter( this);
+        lvMakoEvents.setAdapter(adapter);
+        // download entities from Parse (asynctask)
+        ArrayList<MakoEvent> mEventList = new ArrayList<MakoEvent>();
+        AsyncGetMakoEvents async = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
+        async.execute();
+
+
+
 
     }
 
@@ -225,49 +180,17 @@ public class NavDrawerActivity extends ActionBarActivity {
         return shareIntent;
     }
 
-    private ArrayList<MakoEvent> getMakoEvents(){
-        // fetch objects from Mako side
-        // and return a list of MakoEvent objects
-        final ArrayList<MakoEvent> meList = new ArrayList<MakoEvent>();
+    private void parseInit(){
+        // test parse auth
+        // Enable Local Datastore.
+       // Parse.enableLocalDatastore(this);
+        // init Parse session
+        Parse.initialize(this, "vTOFv5b5IhCPhTrl0uqqCCXDiZSojjwt7FtzSMsU", "YAL4h7JMBz2gPClEnuQHXTyZv4R3YAnYV4Lt74JK");
+        ParseUser.enableAutomaticUser();
+        ParseACL defaultACL = new ParseACL();
 
-        ProgressDialog progressDialog = ProgressDialog.show(NavDrawerActivity.this, "",
-                "Fetching Mako data...", true);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("MakoEvent");
-        try {
-            List<ParseObject> list = query.find();
-            // creating list of MakoEvents
-            for (ParseObject i :list) {
-                MakoEvent mEvent = new MakoEvent();
+        defaultACL.setPublicReadAccess(true);
+        ParseACL.setDefaultACL(defaultACL, true);
 
-                mEvent.setId(i.getObjectId());
-                mEvent.setDescription(i.getString(DESCRIPTION_COL));
-                mEvent.setLikes(i.getInt(NUM_LIKES_COL));
-                mEvent.setName(i.getString(NAME_COL));
-                mEvent.setRating((float)i.getDouble(RATING_COL));
-                mEvent.setStartDate(i.getDate(START_DATE_COL));
-
-                //get picture
-                ParseFile file = (ParseFile) i.get(PICTURE_COL);
-                try {
-                    byte[] picBytes = file.getData();
-                    Bitmap bmp = BitmapFactory.decodeByteArray(picBytes, 0, picBytes.length);
-                    mEvent.setPicture(bmp);
-                    Log.d(PARSE_LOGCAT_TAG, "Success in downloading picture");
-                } catch (ParseException e1) {
-                    Log.d(PARSE_LOGCAT_TAG, "Error downloading picture");
-                }
-
-                meList.add(mEvent);
-                Log.d(PARSE_LOGCAT_TAG, "added mEvent, id "+mEvent.getId());
-            }
-        } catch (ParseException e) {
-            Log.d(PARSE_LOGCAT_TAG,"Fetching error");
-            e.printStackTrace();
-        }
-
-
-        progressDialog.dismiss();
-        return  meList;
     }
-
 }

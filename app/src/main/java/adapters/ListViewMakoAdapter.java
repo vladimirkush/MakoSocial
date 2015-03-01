@@ -16,12 +16,11 @@ import java.util.ArrayList;
 import dbObjects.MakoEvent;
 
 public class ListViewMakoAdapter extends BaseAdapter {
-    ArrayList<MakoEvent> makoEvents;
+    ArrayList<MakoEvent> makoEvents = new ArrayList<MakoEvent>();
     Context context;
     LayoutInflater inflater;
 
-    public ListViewMakoAdapter(ArrayList<MakoEvent> makoEvents, Context context) {
-        this.makoEvents = makoEvents;
+    public ListViewMakoAdapter( Context context) {
         this.context = context;
 
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -85,5 +84,10 @@ public class ListViewMakoAdapter extends BaseAdapter {
 
 
         return row;
+    }
+
+    public void updateEntries(ArrayList<MakoEvent> entries){
+        makoEvents = entries;
+        notifyDataSetChanged();
     }
 }
