@@ -77,11 +77,9 @@
 
         <ImageView
             android:id="@+id/ivLike"
-            android:src="@drawable/like"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:layout_width="24dp"
-            android:layout_height="27dp"
+            android:src="@drawable/like_t"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_weight="1"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
