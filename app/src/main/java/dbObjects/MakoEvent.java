@@ -11,7 +11,7 @@ import java.util.Date;
 public class MakoEvent {
     private String id;
     private String name;
-    private double rating;
+    private float rating;
     private Bitmap picture;
     private Date startDate;
     private int likes;
@@ -22,7 +22,7 @@ public class MakoEvent {
 
     }
 
-    public MakoEvent(String id, String name, double rating, Bitmap picture, Date startDate,
+    public MakoEvent(String id, String name, float rating, Bitmap picture, Date startDate,
                      int likes, String description, ArrayList<Comment> comments) {
         this.id = id;
         this.name = name;
@@ -34,11 +34,11 @@ public class MakoEvent {
         this.comments = comments;
     }
 
-    public double getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

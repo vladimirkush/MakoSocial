@@ -12,6 +12,13 @@ public class Comment {
     private String author;      // user name
     private String text;        // value of a comment
 
+
+    private String makoEventID;
+
+    public Comment(){
+
+    }
+
     public Comment(String id, Date dateCreated, String author, String text) {
         this.id = id;
         this.dateCreated = dateCreated;
@@ -50,4 +57,13 @@ public class Comment {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getMakoEventID() {
+        return makoEventID;
+    }
+
+    public void setMakoEventID(String makoEventID) {
+        this.makoEventID = makoEventID;
+    }
+
 }

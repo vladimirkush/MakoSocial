@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mikepenz.iconics.typeface.FontAwesome;
@@ -23,7 +24,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
-import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
@@ -36,6 +36,7 @@ import com.vj.makosocial.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapters.ListViewMakoAdapter;
 import dbObjects.MakoEvent;
 
 // Mike Penz lib
@@ -54,6 +55,7 @@ public class NavDrawerActivity extends ActionBarActivity {
     private Drawer.Result drawer_res;
     private Toolbar toolbar;
     private ShareActionProvider mShareActionProvider;
+    private ListView lvMakoEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,8 +164,12 @@ public class NavDrawerActivity extends ActionBarActivity {
                         }
                     }
                 }).build();
-
+        // download entities from Parse
         ArrayList<MakoEvent> mEventList = getMakoEvents();
+        // list view
+        lvMakoEvents = (ListView) findViewById(R.id.lvMakoEvents);
+        lvMakoEvents.setAdapter(new ListViewMakoAdapter(mEventList, this));
+
     }
 
     @Override
@@ -227,42 +233,38 @@ public class NavDrawerActivity extends ActionBarActivity {
         ProgressDialog progressDialog = ProgressDialog.show(NavDrawerActivity.this, "",
                 "Fetching Mako data...", true);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("MakoEvent");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if(e==null){
-                    // creating list of MakoEvents
-                    for (ParseObject i :list) {
-                        MakoEvent mEvent = new MakoEvent();
+        try {
+            List<ParseObject> list = query.find();
+            // creating list of MakoEvents
+            for (ParseObject i :list) {
+                MakoEvent mEvent = new MakoEvent();
 
-                        mEvent.setId(i.getObjectId());
-                        mEvent.setDescription(i.getString(DESCRIPTION_COL));
-                        mEvent.setLikes(i.getInt(NUM_LIKES_COL));
-                        mEvent.setName(i.getString(NAME_COL));
-                        mEvent.setRating(i.getDouble(RATING_COL));
-                        mEvent.setStartDate(i.getDate(START_DATE_COL));
+                mEvent.setId(i.getObjectId());
+                mEvent.setDescription(i.getString(DESCRIPTION_COL));
+                mEvent.setLikes(i.getInt(NUM_LIKES_COL));
+                mEvent.setName(i.getString(NAME_COL));
+                mEvent.setRating((float)i.getDouble(RATING_COL));
+                mEvent.setStartDate(i.getDate(START_DATE_COL));
 
-                        //get picture
-                        ParseFile file = (ParseFile) i.get(PICTURE_COL);
-                        try {
-                            byte[] picBytes = file.getData();
-                            Bitmap bmp = BitmapFactory.decodeByteArray(picBytes, 0,picBytes.length);
-                            mEvent.setPicture(bmp);
-                            Log.d(PARSE_LOGCAT_TAG, "Success in downloading picture");
-                        } catch (ParseException e1) {
-                            Log.d(PARSE_LOGCAT_TAG, "Error downloading picture");
-                        }
-
-                        meList.add(mEvent);
-                        Log.d(PARSE_LOGCAT_TAG, "added mEvent, id "+mEvent.getId());
-                    }
-
-
-                }else{
-                    Log.d(PARSE_LOGCAT_TAG,"Fetching error");
+                //get picture
+                ParseFile file = (ParseFile) i.get(PICTURE_COL);
+                try {
+                    byte[] picBytes = file.getData();
+                    Bitmap bmp = BitmapFactory.decodeByteArray(picBytes, 0, picBytes.length);
+                    mEvent.setPicture(bmp);
+                    Log.d(PARSE_LOGCAT_TAG, "Success in downloading picture");
+                } catch (ParseException e1) {
+                    Log.d(PARSE_LOGCAT_TAG, "Error downloading picture");
                 }
+
+                meList.add(mEvent);
+                Log.d(PARSE_LOGCAT_TAG, "added mEvent, id "+mEvent.getId());
             }
-        });
+        } catch (ParseException e) {
+            Log.d(PARSE_LOGCAT_TAG,"Fetching error");
+            e.printStackTrace();
+        }
+
 
         progressDialog.dismiss();
         return  meList;

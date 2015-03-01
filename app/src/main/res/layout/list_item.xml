@@ -14,8 +14,11 @@
         android:layout_height="82dp"
         android:layout_marginTop="2dp"
         android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
         android:scaleType="centerCrop"
         android:src="@drawable/default_pic"
+        android:fadingEdge="vertical"
         />
 
     <TextView
@@ -33,7 +36,7 @@
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
+        android:id="@+id/rbRating"
         style="?android:attr/ratingBarStyleSmall"
         android:numStars="5"
         android:rating="1"
@@ -47,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etEventDescription"
-
+        android:layout_marginTop="5dp"
         android:text="EventDescription"
         android:textColor="@android:color/darker_gray"
 
@@ -56,7 +59,7 @@
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/ivMainPic"
         android:layout_toEndOf="@+id/ivMainPic"
-        android:layout_below="@+id/ratingBar"
+        android:layout_below="@+id/rbRating"
         />
 
     <LinearLayout
@@ -64,11 +67,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/likesAndComments"
-        android:layout_above="@+id/etEventDescription"
-        android:layout_toRightOf="@+id/etEventName"
-        android:layout_toEndOf="@+id/etEventName"
-        android:layout_marginLeft="43dp"
-        android:layout_marginStart="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="25dp"
         >
 
 
