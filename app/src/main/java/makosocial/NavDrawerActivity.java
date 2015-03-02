@@ -34,6 +34,7 @@ import dbObjects.MakoEvent;
 // Mike Penz lib
 
 public class NavDrawerActivity extends ActionBarActivity {
+
     private final String NAME_COL = "Name";
     private final String DESCRIPTION_COL = "Description";
     private final String NUM_LIKES_COL = "NumLikes";

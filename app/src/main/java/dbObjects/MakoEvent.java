@@ -9,6 +9,7 @@ import java.util.Date;
  * Class holds a row that represents a Mako event
  */
 public class MakoEvent {
+
     private String id;
     private String name;
     private float rating;
