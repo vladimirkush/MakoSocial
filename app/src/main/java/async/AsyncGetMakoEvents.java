@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapters.ListViewMakoAdapter;
+import dataHolders.MakoListHolder;
 import dbObjects.MakoEvent;
 
 public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>> {
@@ -100,5 +101,7 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
     protected void onPostExecute(ArrayList<MakoEvent> meList) {
         progressDialog.dismiss();
         this.adapter.updateEntries(meList);
+        // set meList to static holder field
+        MakoListHolder.setmList(meList);
     }
 }

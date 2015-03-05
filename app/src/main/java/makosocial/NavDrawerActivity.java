@@ -23,6 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseUser;
+import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class NavDrawerActivity extends ActionBarActivity {
     private Toolbar toolbar;
     private ShareActionProvider mShareActionProvider;
     private ListView lvMakoEvents;
+    ArrayList<MakoEvent> mEventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +62,18 @@ public class NavDrawerActivity extends ActionBarActivity {
         ListViewMakoAdapter adapter = new ListViewMakoAdapter( this);
         lvMakoEvents.setAdapter(adapter);
         // download entities from Parse (asynctask)
-        ArrayList<MakoEvent> mEventList = new ArrayList<MakoEvent>();
+        mEventList = new ArrayList<MakoEvent>();
         AsyncGetMakoEvents async = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
         async.execute();
+
+        lvMakoEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(NavDrawerActivity.this, DetailedViewActivity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
 
     }
 
