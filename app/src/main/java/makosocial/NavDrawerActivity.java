@@ -31,7 +31,7 @@ import adapters.ListViewMakoAdapter;
 import async.AsyncGetMakoEvents;
 import dbObjects.MakoEvent;
 
-// Mike Penz lib
+
 
 public class NavDrawerActivity extends ActionBarActivity {
 
@@ -46,8 +46,6 @@ public class NavDrawerActivity extends ActionBarActivity {
         setContentView(R.layout.activity_nav_drawer);
 
         parseInit();
-
-
 
         // Handle Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -65,9 +63,6 @@ public class NavDrawerActivity extends ActionBarActivity {
         ArrayList<MakoEvent> mEventList = new ArrayList<MakoEvent>();
         AsyncGetMakoEvents async = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
         async.execute();
-
-
-
 
     }
 
