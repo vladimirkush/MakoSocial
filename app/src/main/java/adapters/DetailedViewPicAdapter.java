@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 import dbObjects.MakoEvent;
-import makosocial.DetailedViewPicFragment;
+import com.vj.makosocial.DetailedViewPicFragment;
 
 
 public class DetailedViewPicAdapter extends FragmentStatePagerAdapter {

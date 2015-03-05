@@ -1,4 +1,4 @@
-package makosocial;
+package com.vj.makosocial;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;

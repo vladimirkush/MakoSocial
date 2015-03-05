@@ -1,4 +1,4 @@
-package makosocial;
+package com.vj.makosocial;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,8 +23,6 @@ import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseUser;
-import com.vj.makosocial.DetailedViewActivity;
-import com.vj.makosocial.R;
 
 import java.util.ArrayList;
 
