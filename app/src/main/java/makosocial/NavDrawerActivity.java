@@ -35,7 +35,7 @@ import dbObjects.MakoEvent;
 
 
 public class NavDrawerActivity extends ActionBarActivity {
-
+    private static String POS_TAG = "position";
     private Drawer.Result drawer_res;
     private Toolbar toolbar;
     private ShareActionProvider mShareActionProvider;
@@ -70,7 +70,7 @@ public class NavDrawerActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(NavDrawerActivity.this, DetailedViewActivity.class);
-                intent.putExtra("position", position);
+                intent.putExtra(POS_TAG, position);
                 startActivity(intent);
             }
         });
