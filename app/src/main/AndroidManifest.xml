@@ -13,7 +13,7 @@
         android:name=".AppState">
 
         <activity
-            android:name=".Dispathcer"
+            android:name=".Dispatcher"
             android:label="@string/title_activity_dispathcer" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
