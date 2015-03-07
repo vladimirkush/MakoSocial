@@ -98,4 +98,11 @@ public class MakoEvent {
     public void setId(String id) {
         this.id = id;
     }
+
+    public int getNumComments(){
+        if(comments==null)
+            return 0;
+        else
+            return comments.size();
+    }
 }
