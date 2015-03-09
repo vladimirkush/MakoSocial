@@ -20,30 +20,26 @@ import dataHolders.MakoListHolder;
 import dbObjects.MakoEvent;
 
 public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>> {
-    private final String NAME_COL = "Name";
-    private final String DESCRIPTION_COL = "Description";
-    private final String NUM_LIKES_COL = "NumLikes";
 
-
-    private final String START_DATE_COL = "StartDate";
-    private final String RATING_COL = "Rating";
-    private final String NUM_RATED_COL = "numRated";
-    private final String PICTURE_COL = "Picture";
-
-    private final String PARSE_LOGCAT_TAG = "Parse";
-
+    private final String NAME_COL           = "Name";
+    private final String DESCRIPTION_COL    = "Description";
+    private final String NUM_LIKES_COL      = "NumLikes";
+    private final String START_DATE_COL     = "StartDate";
+    private final String RATING_COL         = "Rating";
+    private final String NUM_RATED_COL      = "numRated";
+    private final String PICTURE_COL        = "Picture";
+    private final String PARSE_LOGCAT_TAG   = "Parse";
 
     private Context context;
-    private ArrayList<MakoEvent> meList;
-    private ProgressDialog progressDialog;
-    private ListViewMakoAdapter adapter;
+    private ArrayList<MakoEvent>    makoEventsList;
+    private ProgressDialog          progressDialog;
+    private ListViewMakoAdapter     adapter;
 
-    //constructor
-    public AsyncGetMakoEvents(Context context,ArrayList<MakoEvent> list, ListViewMakoAdapter adapter ){
-        this.context=context;
-        this.meList = list;
+    // Constructor
+    public AsyncGetMakoEvents(Context context, ArrayList<MakoEvent> list, ListViewMakoAdapter adapter){
+        this.context = context;
+        this.makoEventsList = list;
         this.adapter = adapter;
-
     }
 
     @Override
@@ -59,11 +55,13 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
     @Override
     protected ArrayList<MakoEvent> doInBackground(Void ...params) {
 
-        // fetch objects from Mako side
-        // and return a list of MakoEvent objects
+        // Fetch objects from Mako server
+        // build and return a list of MakoEvent objects
         ParseQuery<ParseObject> query = ParseQuery.getQuery("MakoEvent");
         try {
+
             List<ParseObject> list = query.find();
+
             // creating list of MakoEvents
             for (ParseObject i :list) {
                 MakoEvent mEvent = new MakoEvent();
@@ -86,7 +84,7 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
                     Log.d(PARSE_LOGCAT_TAG, "Error downloading picture");
                 }
 
-                meList.add(mEvent);
+                makoEventsList.add(mEvent);
                 Log.d(PARSE_LOGCAT_TAG, "added mEvent, id "+mEvent.getId());
             }
         } catch (ParseException e) {
@@ -94,7 +92,7 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
             e.printStackTrace();
         }
 
-        return meList;
+        return makoEventsList;
     }
 
     @Override
