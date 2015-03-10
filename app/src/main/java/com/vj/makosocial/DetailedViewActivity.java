@@ -42,54 +42,54 @@ public class DetailedViewActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_view_layout);
 
-        incIntent = getIntent();
-        clickedPos = incIntent.getIntExtra(POS_TAG,0);
-        setViews();
-
-
-
-        mEvents = MakoListHolder.getmList();
-        if (MakoListHolder.isEmpty())
-            Log.d("DetailedView:" ,"mEvents static field is empty");
-        else
-            Log.d("DetailedView:" ,"length "+ mEvents.size());
-
-        currMakoEvent = mEvents.get(clickedPos);
-        updateScreen(clickedPos);
-
-
-        // set toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(mEvents.get(clickedPos).getName());
-
-        viewPager = (ViewPager)findViewById(R.id.vp_pager);
-        pagerAdapter = new DetailedViewPicAdapter(getSupportFragmentManager(), mEvents);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        viewPager.setCurrentItem(clickedPos);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i2) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                updateScreen(i);
-                getSupportActionBar().setTitle(currMakoEvent.getName());
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
-
-
-
-
+//        incIntent = getIntent();
+//        clickedPos = incIntent.getIntExtra(POS_TAG,0);
+//        setViews();
+//
+//
+//
+//        mEvents = MakoListHolder.getmList();
+//        if (MakoListHolder.isEmpty())
+//            Log.d("DetailedView:" ,"mEvents static field is empty");
+//        else
+//            Log.d("DetailedView:" ,"length "+ mEvents.size());
+//
+//        currMakoEvent = mEvents.get(clickedPos);
+//        updateScreen(clickedPos);
+//
+//
+//        // set toolbar
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle(mEvents.get(clickedPos).getName());
+//
+//        viewPager = (ViewPager)findViewById(R.id.vp_pager);
+//        pagerAdapter = new DetailedViewPicAdapter(getSupportFragmentManager(), mEvents);
+//        viewPager.setAdapter(pagerAdapter);
+//        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+//        viewPager.setCurrentItem(clickedPos);
+//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int i, float v, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int i) {
+//                updateScreen(i);
+//                getSupportActionBar().setTitle(currMakoEvent.getName());
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int i) {
+//
+//            }
+//        });
+//
+//
+//
+//
 
 
 
@@ -118,20 +118,20 @@ public class DetailedViewActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setViews(){
-        tvComments = (TextView)findViewById(R.id.tv_det_view_comments);
-        tvDescription = (TextView)findViewById(R.id.tv_det_view_Descr);
-        tvRating = (TextView)findViewById(R.id.tv_det_view_rating);
-        tvLikes = (TextView)findViewById(R.id.tv_det_view_likes);
-    }
-
-    private  void updateScreen(int pos){
-        currMakoEvent = mEvents.get(pos);
-
-        tvComments.setText(currMakoEvent.getNumComments()+"");
-        tvDescription.setText(currMakoEvent.getDescription());
-        tvRating.setText(currMakoEvent.getRating()+"");
-        tvLikes.setText(currMakoEvent.getLikes()+"");
-
-    }
+//    private void setViews(){
+//        tvComments = (TextView)findViewById(R.id.tv_det_view_comments);
+//        tvDescription = (TextView)findViewById(R.id.tv_det_view_Descr);
+//        tvRating = (TextView)findViewById(R.id.tv_det_view_rating);
+//        tvLikes = (TextView)findViewById(R.id.tv_det_view_likes);
+//    }
+//
+//    private  void updateScreen(int pos){
+//        currMakoEvent = mEvents.get(pos);
+//
+//        tvComments.setText(currMakoEvent.getNumComments()+"");
+//        tvDescription.setText(currMakoEvent.getDescription());
+//        tvRating.setText(currMakoEvent.getRating()+"");
+//        tvLikes.setText(currMakoEvent.getLikes()+"");
+//
+//    }
 }

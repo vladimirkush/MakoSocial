@@ -21,10 +21,17 @@ public class Dispathcer extends Activity {
 
         ParseUser current_user = ParseUser.getCurrentUser();
         if(current_user != null && !ParseAnonymousUtils.isLinked(current_user))
-            startActivity(new Intent(this, NavDrawerActivity.class));
+            startActivityForResult(new Intent(this, NavDrawerActivity.class),0);
         else
-            startActivity(new Intent(this, Login.class));
+            startActivityForResult(new Intent(this, Login.class),0);
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 0) {
+            finish();
+        }
     }
 
 }
