@@ -29,12 +29,12 @@ import dbObjects.MakoEvent;
 
 public class NavDrawerActivity extends ActionBarActivity {
 
-    private static String POS_TAG = "position";
-    private Drawer.Result drawer_res;
-    private Toolbar toolbar;
+    private static String POS_TAG  =    "position";
+    private Drawer.Result       drawer_res;
+    private Toolbar             toolbar;
     private ShareActionProvider mShareActionProvider;
-    private ListView lvMakoEvents;
-    ArrayList<MakoEvent> mEventList;
+    private ListView            lvMakoEvents;
+    ArrayList<MakoEvent>        mEventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,11 @@ public class NavDrawerActivity extends ActionBarActivity {
 
         //list view
         lvMakoEvents = (ListView) findViewById(R.id.lvMakoEvents);
+
         //set adapter
         ListViewMakoAdapter adapter = new ListViewMakoAdapter( this);
         lvMakoEvents.setAdapter(adapter);
+
         // download entities from Parse (asynctask)
         mEventList = new ArrayList<MakoEvent>();
         AsyncGetMakoEvents async = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
@@ -72,11 +74,13 @@ public class NavDrawerActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_nav_drawer, menu);
 
         // Locate MenuItem with ShareActionProvider
         MenuItem share = menu.findItem(R.id.menu_action_share);
+
         // Fetch and store ShareActionProvider
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
         setShareIntent(getShareIntent());

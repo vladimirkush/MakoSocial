@@ -5,10 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.vj.makosocial.DetailedViewPicFragment;
+
 import java.util.ArrayList;
 
 import dbObjects.MakoEvent;
-import com.vj.makosocial.DetailedViewPicFragment;
 
 
 public class DetailedViewPicAdapter extends FragmentStatePagerAdapter {
@@ -24,6 +25,7 @@ public class DetailedViewPicAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         DetailedViewPicFragment fragment = new DetailedViewPicFragment();
         Bundle args = new Bundle();
+
         // Our object is just an integer :-P
         args.putInt(DetailedViewPicFragment.ARG_OBJECT, i);
         fragment.setArguments(args);
