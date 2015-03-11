@@ -19,4 +19,6 @@
     <string name="title_activity_detailed_view">DetailedViewActivity</string>
     <string name="title_activity_dispathcer">Mako Social</string>
 
+    <string name="widget_name">Mako Social</string>
+
 </resources>
