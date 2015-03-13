@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -154,14 +153,16 @@ public class WidgetConfigActivity extends Activity {
         else{
             MakoEvent mEvent = (MakoEvent)ad.getItem(option);
             sp = getSharedPreferences(WIDGET_PREF, MODE_PRIVATE);
+
             Editor editor = sp.edit();
             editor.putString(WIDGET_NAME + widgetID, mEvent.getName() );
             editor.putString(WIDGET_DATE + widgetID, mEvent.getStartDate().toString());
-            Log.d(LOG_TAG, WIDGET_DATE + widgetID + " tostr: " + mEvent.getStartDate().toString());
+
+           // Log.d(LOG_TAG, WIDGET_DATE + widgetID + " tostr: " + mEvent.getStartDate().toString());
             FileOutputStream fo =null;
             try {
                 // save picture to a file
-                //File f = getOutputMediaFile(WIDGET_FILENAME+widgetID+".png");
+
                 File f = new File(this.getFilesDir(), WIDGET_FILENAME+widgetID+".png");
                 path = f.getAbsolutePath();
                 Log.d(LOG_TAG, "abs path: "+ path);
@@ -178,7 +179,7 @@ public class WidgetConfigActivity extends Activity {
                         Toast.LENGTH_LONG).show();
             }
             editor.putString(WIDGET_PIC_PATH+widgetID, path);
-           //editor.putString(WIDGET_PIC_PATH+widgetID, WIDGET_FILENAME+widgetID+".png");
+
            editor.commit();
 
 
@@ -195,27 +196,5 @@ public class WidgetConfigActivity extends Activity {
 
 
     }
-    /** Create a File for saving an image or video */
-    public File getOutputMediaFile(String filename){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + getApplicationContext().getPackageName()
-                + "/Files");
 
-
-
-        // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                return null;
-            }
-        }
-        // Create a media file name
-
-        File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + filename);
-        return mediaFile;
-    }
 }

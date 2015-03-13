@@ -20,6 +20,7 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 import static android.content.SharedPreferences.Editor;
 
@@ -81,16 +82,17 @@ public class MakoWidget extends AppWidgetProvider {
         String dateString = sp.getString(WidgetConfigActivity.WIDGET_DATE+widgetID, null);
         if(dateString==null)
             Log.d(LOG_TAG, "*** DATESTRING = NULL ***");
-
+        Date date;
         SimpleDateFormat format = new SimpleDateFormat("EEE MMM d HH:mm:ss zz yyyy");
+        format.setTimeZone(TimeZone.getDefault());
         try {
-            Date date = format.parse(dateString);
+            date = format.parse(dateString);
             System.out.println(date);
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        Date date = new Date(dateString);
+
         String pic_path = sp.getString(WidgetConfigActivity.WIDGET_PIC_PATH+widgetID,null);
         Log.d(LOG_TAG, "Pic_path: "+ pic_path);
         try {
