@@ -5,6 +5,7 @@
                 android:layout_height="match_parent"
                 android:baselineAligned="false"
                 android:id="@+id/wg_conf_itemRLayout"
+                android:background="@drawable/wgconf_selector"
     >
 
     <ImageView

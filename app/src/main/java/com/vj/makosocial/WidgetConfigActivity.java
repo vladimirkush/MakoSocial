@@ -6,21 +6,32 @@ import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import adapters.WifgetConfigListAdapter;
 import async.AsyncGetMakoEvents;
 import dbObjects.MakoEvent;
+import widget.MakoWidget;
+
+import static android.content.SharedPreferences.Editor;
 
 
 public class WidgetConfigActivity extends Activity {
@@ -31,14 +42,20 @@ public class WidgetConfigActivity extends Activity {
     AlertDialog             dlg;
     ArrayList<MakoEvent>    mEventList;
     WifgetConfigListAdapter adapter;
+    SharedPreferences       sp;
 
     int option = -1;
     Button okBtn;
     ListView lvEventList;
 
     int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
-    final String LOG_TAG =                      "widget";
-    public final static String WIDGET_PREF =    "widget_pref";
+
+    public final static String LOG_TAG =            "widget";
+    public final static String WIDGET_PREF =        "widget_pref";
+    public final static String WIDGET_NAME =        "widget_name_";
+    public final static String WIDGET_DATE =        "widget_date_";
+    public final static String WIDGET_PIC_PATH =    "widget_pic_path_";
+    public final static String WIDGET_FILENAME =    "wg_pic";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +100,7 @@ public class WidgetConfigActivity extends Activity {
 
             adapter = new WifgetConfigListAdapter(this);
             lvEventList.setAdapter(adapter);
+            lvEventList.setSelector(R.drawable.wgconf_selector);
 
             // download entities from Parse (asynctask)
             mEventList = new ArrayList<MakoEvent>();
@@ -95,6 +113,8 @@ public class WidgetConfigActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Log.d(LOG_TAG, "clicked lv pos: "+ position);
+                   option = position;
+
                 }
             });
 
@@ -114,6 +134,7 @@ public class WidgetConfigActivity extends Activity {
     }
 
 
+
     private void setViews(){
         okBtn = (Button)findViewById(R.id.bt_wgconf_ok);
         lvEventList = (ListView)findViewById(R.id.lv_wgconf);
@@ -123,9 +144,78 @@ public class WidgetConfigActivity extends Activity {
     public void btnOKclick(View v) {
         // on OK button click - confirm widget creation
         WifgetConfigListAdapter ad = (WifgetConfigListAdapter) lvEventList.getAdapter();
-
         Log.d(LOG_TAG, "adapter size = " + ad.getCount());
-        Log.d(LOG_TAG, "name[2] = " + ((MakoEvent)ad.getItem(2)).getName());
-        Log.d(LOG_TAG, "name[4] = " + ((MakoEvent)ad.getItem(4)).getName());
+        Log.d(LOG_TAG, "option " + option);
+
+        String path="";
+        if(option==-1)// if nothing selected
+            Toast.makeText(getApplicationContext(), "Nothing checked, hit back to cancel",
+                    Toast.LENGTH_SHORT).show();
+        else{
+            MakoEvent mEvent = (MakoEvent)ad.getItem(option);
+            sp = getSharedPreferences(WIDGET_PREF, MODE_PRIVATE);
+            Editor editor = sp.edit();
+            editor.putString(WIDGET_NAME + widgetID, mEvent.getName() );
+            editor.putString(WIDGET_DATE + widgetID, mEvent.getStartDate().toString());
+            Log.d(LOG_TAG, WIDGET_DATE + widgetID + " tostr: " + mEvent.getStartDate().toString());
+            FileOutputStream fo =null;
+            try {
+                // save picture to a file
+                //File f = getOutputMediaFile(WIDGET_FILENAME+widgetID+".png");
+                File f = new File(this.getFilesDir(), WIDGET_FILENAME+widgetID+".png");
+                path = f.getAbsolutePath();
+                Log.d(LOG_TAG, "abs path: "+ path);
+                fo = new FileOutputStream(f);
+
+                mEvent.getPicture().compress(Bitmap.CompressFormat.PNG, 40,fo);
+
+                fo.close();
+            } catch (FileNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "FNF",
+                        Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                Toast.makeText(getApplicationContext(), "IOE",
+                        Toast.LENGTH_LONG).show();
+            }
+            editor.putString(WIDGET_PIC_PATH+widgetID, path);
+           //editor.putString(WIDGET_PIC_PATH+widgetID, WIDGET_FILENAME+widgetID+".png");
+           editor.commit();
+
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+            MakoWidget.updateWidget(this, appWidgetManager, sp, widgetID);
+
+            // finished config  - set positive response
+            setResult(RESULT_OK, resultValue);
+
+            Log.d(LOG_TAG, "finish config " + widgetID);
+            finish();
+        }
+
+
+
+    }
+    /** Create a File for saving an image or video */
+    public File getOutputMediaFile(String filename){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + getApplicationContext().getPackageName()
+                + "/Files");
+
+
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+        // Create a media file name
+
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + filename);
+        return mediaFile;
     }
 }

@@ -10,6 +10,8 @@
 
         android:src="@drawable/default_pic"
         android:padding="3dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="3dp"
         android:scaleType="centerCrop"
         android:layout_width="80dp"
         android:layout_height="80dp"
