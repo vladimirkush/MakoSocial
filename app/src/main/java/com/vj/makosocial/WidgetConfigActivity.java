@@ -8,22 +8,42 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+
+import adapters.WifgetConfigListAdapter;
+import async.AsyncGetMakoEvents;
+import dbObjects.MakoEvent;
+
 
 public class WidgetConfigActivity extends Activity {
-    int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
-    Intent resultValue;
-    AlertDialog dlg;
 
+
+
+    Intent                  resultValue;
+    AlertDialog             dlg;
+    ArrayList<MakoEvent>    mEventList;
+    WifgetConfigListAdapter adapter;
+
+    int option = -1;
+    Button okBtn;
+    ListView lvEventList;
+
+    int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
     final String LOG_TAG =                      "widget";
     public final static String WIDGET_PREF =    "widget_pref";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_widget_config);
         Log.d(LOG_TAG, "onCreate");
 
         // retreive widget ID
@@ -56,9 +76,32 @@ public class WidgetConfigActivity extends Activity {
             });
 
             dlg.show();
+        }else{
+            Log.d(LOG_TAG, "logged in");
+            setViews();
+
+
+            adapter = new WifgetConfigListAdapter(this);
+            lvEventList.setAdapter(adapter);
+
+            // download entities from Parse (asynctask)
+            mEventList = new ArrayList<MakoEvent>();
+
+            AsyncGetMakoEvents async = new AsyncGetMakoEvents(WidgetConfigActivity.this,mEventList,adapter);
+            async.execute();
+
+            //set listener on option selected
+            lvEventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d(LOG_TAG, "clicked lv pos: "+ position);
+                }
+            });
+
+
         }
 
-        Log.d(LOG_TAG, "logined");
+
 
 
         // build response intent
@@ -68,11 +111,21 @@ public class WidgetConfigActivity extends Activity {
         // negative response
         setResult(RESULT_CANCELED, resultValue);
 
-        setContentView(R.layout.activity_widget_config);
     }
 
 
+    private void setViews(){
+        okBtn = (Button)findViewById(R.id.bt_wgconf_ok);
+        lvEventList = (ListView)findViewById(R.id.lv_wgconf);
 
+    }
 
+    public void btnOKclick(View v) {
+        // on OK button click - confirm widget creation
+        WifgetConfigListAdapter ad = (WifgetConfigListAdapter) lvEventList.getAdapter();
 
+        Log.d(LOG_TAG, "adapter size = " + ad.getCount());
+        Log.d(LOG_TAG, "name[2] = " + ((MakoEvent)ad.getItem(2)).getName());
+        Log.d(LOG_TAG, "name[4] = " + ((MakoEvent)ad.getItem(4)).getName());
+    }
 }

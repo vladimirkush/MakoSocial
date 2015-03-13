@@ -21,6 +21,7 @@ public class Dispatcher extends Activity {
             startActivity(new Intent(this, NavDrawerActivity.class));
         else
             startActivity(new Intent(this, Login.class));
+        this.finish();
 
     }
 
