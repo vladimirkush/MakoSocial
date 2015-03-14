@@ -47,7 +47,7 @@ public class MakoWidget extends AppWidgetProvider {
         AlarmManager alarmManager = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(),
-                60000, pIntent);
+                10000, pIntent);
 
     }
 
@@ -118,7 +118,10 @@ public class MakoWidget extends AppWidgetProvider {
                                     SharedPreferences sp, int widgetID) {
         Log.d(LOG_TAG, "updateWidget " + widgetID);
 
-        if (sp == null) return;
+        if (sp == null) {
+            Log.d(LOG_TAG, "* sp=NULL * ");
+            return;
+        }
         //read preferences
 
         String name = sp.getString(WidgetConfigActivity.WIDGET_NAME + widgetID, null);
@@ -127,13 +130,13 @@ public class MakoWidget extends AppWidgetProvider {
         String dateString = sp.getString(WidgetConfigActivity.WIDGET_DATE + widgetID, null);
         if (dateString == null)
             Log.d(LOG_TAG, "*** DATESTRING = NULL ***");
-
+        Log.d(LOG_TAG, "dateString = "+dateString);
         Date eventDate = null;
         SimpleDateFormat format = new SimpleDateFormat(STD_FORMAT);
         format.setTimeZone(TimeZone.getDefault());
         try {
             eventDate = format.parse(dateString);
-            System.out.println(eventDate);
+
         } catch (ParseException e) {
             Log.d(LOG_TAG, "*** Parsing date exeption *** ");
             e.printStackTrace();

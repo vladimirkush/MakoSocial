@@ -23,7 +23,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import adapters.WifgetConfigListAdapter;
 import async.AsyncGetMakoEvents;
@@ -49,6 +51,7 @@ public class WidgetConfigActivity extends Activity {
 
     int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
 
+    public final static String STD_FORMAT =         "EEE MMM d HH:mm:ss zz yyyy";
     public final static String LOG_TAG =            "widget";
     public final static String WIDGET_PREF =        "widget_pref";
     public final static String WIDGET_NAME =        "widget_name_";
@@ -154,9 +157,18 @@ public class WidgetConfigActivity extends Activity {
             MakoEvent mEvent = (MakoEvent)ad.getItem(option);
             sp = getSharedPreferences(WIDGET_PREF, MODE_PRIVATE);
 
+            SimpleDateFormat sdf = new SimpleDateFormat(STD_FORMAT);
+            Date dt = mEvent.getStartDate();
+            String datetime = sdf.format(dt);
+            Log.d(LOG_TAG,"Current Date Time : " + datetime);
+
+
+
+
             Editor editor = sp.edit();
             editor.putString(WIDGET_NAME + widgetID, mEvent.getName() );
-            editor.putString(WIDGET_DATE + widgetID, mEvent.getStartDate().toString());
+
+            editor.putString(WIDGET_DATE + widgetID, datetime);
 
            // Log.d(LOG_TAG, WIDGET_DATE + widgetID + " tostr: " + mEvent.getStartDate().toString());
             FileOutputStream fo =null;
