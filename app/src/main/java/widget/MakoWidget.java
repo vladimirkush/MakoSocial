@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.vj.makosocial.NavDrawerActivity;
 import com.vj.makosocial.R;
 import com.vj.makosocial.WidgetConfigActivity;
 
@@ -166,6 +167,9 @@ public class MakoWidget extends AppWidgetProvider {
         widgetView.setTextViewText(R.id.tv_wg_timer, timer);
 
         //updating widget
+        Intent configIntent = new Intent(context, NavDrawerActivity.class);
+        setOnWidgetClick(context,widgetView,configIntent,widgetID);
+
         appWidgetManager.updateAppWidget(widgetID, widgetView);
         Log.d(LOG_TAG, "widget " + widgetID +" updated");
 
@@ -190,6 +194,14 @@ public class MakoWidget extends AppWidgetProvider {
         }
 
         return res;
+    }
+
+    private static void setOnWidgetClick(Context ctx,RemoteViews v, Intent intent, int widgetID){
+
+        intent.setAction(Intent.CATEGORY_LAUNCHER);
+        PendingIntent pIntent = PendingIntent.getActivity(ctx, widgetID,
+                intent, 0);
+        v.setOnClickPendingIntent(R.id.wg_layout, pIntent);
     }
 
 }
