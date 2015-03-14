@@ -31,8 +31,6 @@
         android:layout_toEndOf="@+id/wgconf_ivMainPic"
         android:layout_toRightOf="@+id/wgconf_ivMainPic"
         android:textSize="21sp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         />
 
     <TextView

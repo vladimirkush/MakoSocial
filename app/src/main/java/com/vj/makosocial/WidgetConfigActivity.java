@@ -148,7 +148,7 @@ public class WidgetConfigActivity extends Activity {
 
         String path="";
         if(option==-1)// if nothing selected
-            Toast.makeText(getApplicationContext(), "Nothing checked, hit back to cancel",
+            Toast.makeText(getApplicationContext(), "Nothing checked, tap back to cancel",
                     Toast.LENGTH_SHORT).show();
         else{
             MakoEvent mEvent = (MakoEvent)ad.getItem(option);
