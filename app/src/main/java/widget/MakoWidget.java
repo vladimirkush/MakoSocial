@@ -52,7 +52,7 @@ public class MakoWidget extends AppWidgetProvider {
         AlarmManager alarmManager = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(),
-                10000, pIntent);
+                30000, pIntent);
 
     }
 
