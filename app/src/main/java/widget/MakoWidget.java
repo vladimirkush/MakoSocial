@@ -1,6 +1,8 @@
 package widget;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -10,9 +12,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.vj.makosocial.Dispatcher;
 import com.vj.makosocial.NavDrawerActivity;
 import com.vj.makosocial.R;
 import com.vj.makosocial.WidgetConfigActivity;
@@ -166,6 +170,7 @@ public class MakoWidget extends AppWidgetProvider {
         widgetView.setTextViewText(R.id.tv_wg_title, name);
         widgetView.setTextViewText(R.id.tv_wg_timer, timer);
 
+        raiseNotification(timer,context,name,bitmap);
         //updating widget
         Intent configIntent = new Intent(context, NavDrawerActivity.class);
         setOnWidgetClick(context,widgetView,configIntent,widgetID);
@@ -189,8 +194,8 @@ public class MakoWidget extends AppWidgetProvider {
 
             if (diff <= 0)
                 res = String.format("%dd %dh %dm", 0, 0, 0 );
-
-            res = String.format("%dd %dh %dm", days, hours % 24, minutes % 60);
+            else
+                res = String.format("%dd %dh %dm", days, hours % 24, minutes % 60);
         }
 
         return res;
@@ -203,5 +208,39 @@ public class MakoWidget extends AppWidgetProvider {
                 intent, 0);
         v.setOnClickPendingIntent(R.id.wg_layout, pIntent);
     }
+
+    private static void raiseNotification(String timer, Context ctx, String title,  Bitmap pic) {
+        String descr="";
+        Log.d(LOG_TAG, "in Raise notification");
+        if (timer.equals("0d 0h 5m")){
+            Log.d(LOG_TAG, "5 min ready**");
+            descr = "there is only 5 minutes left!";
+            notify(ctx,pic,title,descr);
+        }
+        else if (timer.equals("0d 0h 0m")){
+            Log.d(LOG_TAG, "0 min ready**");
+            descr = "Starting now!";
+            notify(ctx,pic,title,descr);
+        }
+    }
+
+    private static void notify(Context ctx, Bitmap icon, String title, String desc){
+        Log.d(LOG_TAG, "in notify **");
+        Intent intent = new Intent(ctx, Dispatcher.class);
+        intent.setAction(Intent.CATEGORY_LAUNCHER);
+        PendingIntent pIntent = PendingIntent.getActivity(ctx, 0,
+                intent, 0);
+        int notificationId = 001;
+        Notification notif = new NotificationCompat.Builder(ctx).
+                setSmallIcon(R.drawable.default_pic).
+                setContentTitle(title).
+                setContentText(desc).
+                setLargeIcon(icon).
+                setContentIntent(pIntent).build()    ;
+        NotificationManager notifM =  (NotificationManager) ctx.getSystemService(ctx.NOTIFICATION_SERVICE);
+        notifM.notify(notificationId, notif);
+    }
+
+
 
 }
