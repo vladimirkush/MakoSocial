@@ -4,63 +4,50 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:baselineAligned="false"
-              android:id="@+id/itemRLayout"
-    >
+              android:id="@+id/itemRLayout">
 
     <ImageView
         android:id="@+id/ivMainPic"
         android:adjustViewBounds="true"
         android:layout_width="82dp"
         android:layout_height="82dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginBottom="2dp"
         android:scaleType="centerCrop"
         android:src="@drawable/default_pic"
-        android:fadingEdge="vertical"
-        />
+        android:fadingEdge="vertical"/>
 
     <TextView
+        android:id="@+id/etEventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etEventName"
-        android:text="EventName"
+        android:text="name_of_show"
         android:textColor="@android:color/black"
-        android:layout_alignTop="@+id/ivMainPic"
         android:layout_toRightOf="@+id/ivMainPic"
-        android:layout_toEndOf="@+id/ivMainPic"
-        android:textSize="22sp"
-        />
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:textSize="22sp"/>
 
     <RatingBar
+        android:id="@+id/rbRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rbRating"
         style="?android:attr/ratingBarStyleSmall"
         android:numStars="5"
         android:rating="1"
         android:stepSize="0.5"
         android:layout_below="@+id/etEventName"
         android:layout_alignLeft="@+id/etEventName"
-        android:layout_alignStart="@+id/etEventName"
-        />
+        android:layout_alignStart="@+id/etEventName"/>
 
     <TextView
+        android:id="@+id/etEventDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etEventDescription"
         android:layout_marginTop="5dp"
         android:text="EventDescription"
         android:textColor="@android:color/darker_gray"
-
-        android:layout_alignBottom="@+id/ivMainPic"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/ivMainPic"
-        android:layout_toEndOf="@+id/ivMainPic"
         android:layout_below="@+id/rbRating"
-        />
+        android:layout_alignLeft="@+id/rbRating"
+        android:layout_alignStart="@+id/rbRating"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -71,8 +58,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="25dp"
-        >
+        android:layout_marginRight="25dp">
 
 
         <ImageView
@@ -82,8 +68,7 @@
             android:layout_height="25dp"
             android:layout_weight="1"
             android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            />
+            android:layout_marginRight="2dp"/>
 
         <TextView
             android:layout_width="wrap_content"

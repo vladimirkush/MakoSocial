@@ -8,104 +8,112 @@
     sothree:umanoPanelHeight="68dp"
     sothree:umanoShadowHeight="4dp">
 
+    <!-- Main Content -->
     <LinearLayout
         android:orientation="vertical"
+        android:weightSum="10"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="A Content"
-            android:textSize="16sp" />
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="B Content"
-            android:textSize="16sp" />
-        <TextView
-            android:layout_marginTop="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="C Content"
-            android:textSize="16sp" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="4dp"
+                android:layout_centerInParent="true"
+                android:transitionName="actionBar"/>
+            <!--android:minHeight="?attr/actionBarSize"-->
+            <!--android:paddingTop="@dimen/tool_bar_top_padding"-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <View android:background="#a5a5a5" android:layout_width="match_parent" android:layout_height="1px"/>
+
+            <TextView
+                android:id="@+id/tv_det_view_Descr"
+                android:lines="2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:text="description"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
+    <!-- Sliding Content -->
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|top"
-            android:text="The Awesome Sliding Up Panel"
-            android:textSize="16sp" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|top"
-            android:text="The Awesome Sliding Up Panel"
-            android:textSize="16sp" />
+            <!--Rate-->
 
-        <TextView
-            android:layout_marginTop="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|top"
-            android:text="The Awesome Sliding Up Panel"
-            android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <!--Comment-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <!--Facts (registers also for widget and push notifications)-->
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+
+
 <!--<?xml version="1.0" encoding="utf-8"?>-->
 <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
               <!--android:layout_width="match_parent"-->
               <!--android:layout_height="match_parent"-->
               <!--android:orientation="vertical"-->
               <!--android:weightSum="1">-->
-
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--android:elevation="4dp"-->
-        <!--android:minHeight="?attr/actionBarSize"-->
-        <!--android:paddingTop="@dimen/tool_bar_top_padding"-->
-        <!--android:transitionName="actionBar"/>-->
-
-        <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/vp_pager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_below="@+id/toolbar"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_above="@+id/tv_det_view_Descr"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/tv_det_view_Descr"-->
-            <!--android:lines="2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="6dp"-->
-            <!--android:text="Description: bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:textColor="@android:color/black"-->
-            <!--android:layout_above="@+id/linearLayout"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:background="@drawable/rect_backg"/>-->
 
         <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
                       <!--android:layout_width="match_parent"-->
