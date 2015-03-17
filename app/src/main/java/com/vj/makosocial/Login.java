@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,14 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import javax.sql.RowSetListener;
-
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-import com.vj.makosocial.NavDrawerActivity;
 
 
 public class Login extends ActionBarActivity {
@@ -138,7 +132,7 @@ public class Login extends ActionBarActivity {
                             Toast.makeText(getApplicationContext(), e.getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         else {
-                            Intent i = new Intent(Login.this, Dispathcer.class);
+                            Intent i = new Intent(Login.this, Dispatcher.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
                         }
@@ -169,7 +163,7 @@ public class Login extends ActionBarActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent i = new Intent(Login.this, Dispathcer.class);
+                Intent i = new Intent(Login.this, Dispatcher.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }
@@ -187,7 +181,7 @@ public class Login extends ActionBarActivity {
         }
 
         if(mode == MODE_SIGNUP && !doPasswordsMatch(login_password, login_repeat_password)) {
-            Toast.makeText(getApplicationContext(), "Passwords dont match",
+            Toast.makeText(getApplicationContext(), "Passwords don't match",
                     Toast.LENGTH_SHORT).show();
             return false;
         }

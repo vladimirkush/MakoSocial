@@ -4,16 +4,16 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".AppState"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".AppState">
-
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".Dispathcer"
+            android:name=".Dispatcher"
             android:label="@string/title_activity_dispathcer" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,23 +21,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".NavDrawerActivity"
             android:label="@string/app_name" >
         </activity>
-
         <activity
             android:name=".Login"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_login" >
         </activity>
-
         <activity
             android:name=".DetailedViewActivity"
             android:label="@string/title_activity_detailed_view" >
         </activity>
 
+        <receiver
+            android:name="widget.MakoWidget"
+            android:icon="@drawable/default_pic"
+            android:label="@string/widget_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" >
+                </action>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_metadata" >
+            </meta-data>
+        </receiver>
+
+        <activity
+            android:name=".WidgetConfigActivity"
+            android:label="@string/title_activity_widget_config">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"></action>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

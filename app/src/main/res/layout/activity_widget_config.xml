@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+
+
+    tools:context="com.vj.makosocial.WidgetConfigActivity">
+
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:text="Choose your event for a widget:"
+        android:id="@+id/textView"
+        android:layout_weight="0.01"
+        android:textColor="@android:color/black"
+
+        android:textSize="20sp"
+        />
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_wgconf"
+        android:layout_below="@+id/ll_header"
+        android:layout_above="@+id/bt_wgconf_ok"
+        android:layout_weight="0.90"
+        android:choiceMode="singleChoice"/>
+
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:padding="8dp"
+        android:layout_marginBottom="2dp"
+        android:text="OK"
+        android:id="@+id/bt_wgconf_ok"
+        android:onClick="btnOKclick"
+        android:layout_weight="0.05"
+        />
+
+
+
+    </LinearLayout>

@@ -6,21 +6,19 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
-import com.parse.Parse;
-import com.parse.ParseACL;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -31,19 +29,18 @@ import dbObjects.MakoEvent;
 
 public class NavDrawerActivity extends ActionBarActivity {
 
-    private static String POS_TAG = "position";
-    private Drawer.Result drawer_res;
-    private Toolbar toolbar;
+    private static String POS_TAG  =    "position";
+    private Drawer.Result       drawer_res;
+    private Toolbar             toolbar;
     private ShareActionProvider mShareActionProvider;
-    private ListView lvMakoEvents;
-    ArrayList<MakoEvent> mEventList;
+    private ListView            lvMakoEvents;
+    ArrayList<MakoEvent>        mEventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_drawer);
 
-        parseInit();
 
         // Handle Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -54,9 +51,11 @@ public class NavDrawerActivity extends ActionBarActivity {
 
         //list view
         lvMakoEvents = (ListView) findViewById(R.id.lvMakoEvents);
+
         //set adapter
         ListViewMakoAdapter adapter = new ListViewMakoAdapter( this);
         lvMakoEvents.setAdapter(adapter);
+
         // download entities from Parse (asynctask)
         mEventList = new ArrayList<MakoEvent>();
         AsyncGetMakoEvents async = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
@@ -75,11 +74,13 @@ public class NavDrawerActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_activity_nav_drawer, menu);
 
         // Locate MenuItem with ShareActionProvider
         MenuItem share = menu.findItem(R.id.menu_action_share);
+
         // Fetch and store ShareActionProvider
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
         setShareIntent(getShareIntent());
@@ -126,24 +127,6 @@ public class NavDrawerActivity extends ActionBarActivity {
         return shareIntent;
     }
 
-    private void parseInit(){
-        // test parse auth
-        // Enable Local Datastore.
-        // Parse.enableLocalDatastore(this);
-        // init Parse session
-
-
-        // moved to login activity
-//        Parse.initialize(this, "vTOFv5b5IhCPhTrl0uqqCCXDiZSojjwt7FtzSMsU", "YAL4h7JMBz2gPClEnuQHXTyZv4R3YAnYV4Lt74JK");
-
-
-        ParseUser.enableAutomaticUser();
-        ParseACL defaultACL = new ParseACL();
-
-        defaultACL.setPublicReadAccess(true);
-        ParseACL.setDefaultACL(defaultACL, true);
-
-    }
 
     private Drawer.Result getDrawerResult(){
         /* Using Mike Penz material design library:
@@ -185,19 +168,24 @@ public class NavDrawerActivity extends ActionBarActivity {
                         new SecondaryDrawerItem()
                                 .withName(R.string.drawer_item_help)
                                 .withIcon(FontAwesome.Icon.faw_question_circle)
-                                .withIdentifier(4)
+                                .withIdentifier(5)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     // click handle
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                        if (drawerItem == null) { // clicked on the header picture
+                            Log.d("Parse", "Drawer NULL ");
+                            return;
+                        }
                         if (drawerItem.getIdentifier() == 0) {
                             ParseUser.logOut();
-                            Intent i = new Intent(NavDrawerActivity.this, Dispathcer.class);
+                            Intent i = new Intent(NavDrawerActivity.this, Dispatcher.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(i);
-                        }
+                        } else
+                            Log.d("Parse", "Drawer id " + drawerItem.getIdentifier());
                     }
                 }).build();
         return dr;

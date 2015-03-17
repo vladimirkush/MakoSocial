@@ -101,6 +101,14 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <!--Sign up for notifications and go to widget screen-->
+
+        </RelativeLayout>
 
     </LinearLayout>
 

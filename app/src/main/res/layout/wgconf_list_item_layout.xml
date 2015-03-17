@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false"
+                android:id="@+id/wg_conf_itemRLayout"
+                android:background="@drawable/wgconf_selector"
+    >
+
+    <ImageView
+        android:id="@+id/wgconf_ivMainPic"
+        android:adjustViewBounds="true"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_pic"
+        android:fadingEdge="vertical"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/wg_conf_etEventName"
+        android:text="EventName"
+        android:textColor="@android:color/black"
+        android:layout_alignTop="@+id/wgconf_ivMainPic"
+        android:layout_toEndOf="@+id/wgconf_ivMainPic"
+        android:layout_toRightOf="@+id/wgconf_ivMainPic"
+        android:textSize="21sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="Start date:"
+        android:textSize="17sp"
+        android:textColor="@android:color/black"
+        android:id="@+id/wgconf_tv_datelabel"
+        android:layout_below="@+id/wg_conf_etEventName"
+        android:layout_toRightOf="@+id/wgconf_ivMainPic"
+        android:layout_toEndOf="@+id/wgconf_ivMainPic"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="27/02/2015 13:35"
+        android:layout_marginTop="2dp"
+        android:id="@+id/wgconf_tv_date"
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/wgconf_tv_datelabel"
+        android:layout_toRightOf="@+id/wgconf_ivMainPic"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/wgconf_ivMainPic"
+        />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:id="@+id/rl_empty"
+        />
+
+</RelativeLayout>
