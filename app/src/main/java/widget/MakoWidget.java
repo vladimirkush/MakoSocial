@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -38,6 +40,7 @@ public class MakoWidget extends AppWidgetProvider {
     public final static String UPDATE_ALL_WIDGETS = "update_all_widgets";
     public final static String LOG_TAG =            "widget";
     public final static String STD_FORMAT =         "EEE MMM d HH:mm:ss zz yyyy";
+    public final int WIDGET_UPDATE_MILLIS = 60000;
     SharedPreferences sp;
 
     @Override
@@ -52,7 +55,7 @@ public class MakoWidget extends AppWidgetProvider {
         AlarmManager alarmManager = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(),
-                30000, pIntent);
+                WIDGET_UPDATE_MILLIS, pIntent);
 
     }
 
@@ -127,15 +130,15 @@ public class MakoWidget extends AppWidgetProvider {
             Log.d(LOG_TAG, "* sp=NULL * ");
             return;
         }
-        //read preferences
 
+        //read preferences
         String name = sp.getString(WidgetConfigActivity.WIDGET_NAME + widgetID, null);
         if (name == null) return;
 
         String dateString = sp.getString(WidgetConfigActivity.WIDGET_DATE + widgetID, null);
         if (dateString == null)
             Log.d(LOG_TAG, "*** DATESTRING = NULL ***");
-        Log.d(LOG_TAG, "dateString = "+dateString);
+        Log.d(LOG_TAG, "dateString = " + dateString);
         Date eventDate = null;
         SimpleDateFormat format = new SimpleDateFormat(STD_FORMAT);
         format.setTimeZone(TimeZone.getDefault());
@@ -170,13 +173,13 @@ public class MakoWidget extends AppWidgetProvider {
         widgetView.setTextViewText(R.id.tv_wg_title, name);
         widgetView.setTextViewText(R.id.tv_wg_timer, timer);
 
-        raiseNotification(timer,context,name,bitmap);
+        raiseNotification(timer, context, name, bitmap);
         //updating widget
         Intent configIntent = new Intent(context, NavDrawerActivity.class);
-        setOnWidgetClick(context,widgetView,configIntent,widgetID);
+        setOnWidgetClick(context, widgetView, configIntent, widgetID);
 
         appWidgetManager.updateAppWidget(widgetID, widgetView);
-        Log.d(LOG_TAG, "widget " + widgetID +" updated");
+        Log.d(LOG_TAG, "widget " + widgetID + " updated");
 
     }
 
@@ -193,7 +196,7 @@ public class MakoWidget extends AppWidgetProvider {
             long days = hours / 24;
 
             if (diff <= 0)
-                res = String.format("%dd %dh %dm", 0, 0, 0 );
+                res = String.format("%dd %dh %dm", 0, 0, 0);
             else
                 res = String.format("%dd %dh %dm", days, hours % 24, minutes % 60);
         }
@@ -201,7 +204,7 @@ public class MakoWidget extends AppWidgetProvider {
         return res;
     }
 
-    private static void setOnWidgetClick(Context ctx,RemoteViews v, Intent intent, int widgetID){
+    private static void setOnWidgetClick(Context ctx, RemoteViews v, Intent intent, int widgetID) {
 
         intent.setAction(Intent.CATEGORY_LAUNCHER);
         PendingIntent pIntent = PendingIntent.getActivity(ctx, widgetID,
@@ -209,38 +212,40 @@ public class MakoWidget extends AppWidgetProvider {
         v.setOnClickPendingIntent(R.id.wg_layout, pIntent);
     }
 
-    private static void raiseNotification(String timer, Context ctx, String title,  Bitmap pic) {
-        String descr="";
+    private static void raiseNotification(String timer, Context ctx, String title, Bitmap pic) {
+        String descr = "";
         Log.d(LOG_TAG, "in Raise notification");
-        if (timer.equals("0d 0h 5m")){
+        if (timer.equals("0d 0h 5m")) {
             Log.d(LOG_TAG, "5 min ready**");
             descr = "there is only 5 minutes left!";
-            notify(ctx,pic,title,descr);
-        }
-        else if (timer.equals("0d 0h 0m")){
+            notify(ctx, pic, title, descr);
+        } else if (timer.equals("0d 0h 0m")) {
             Log.d(LOG_TAG, "0 min ready**");
             descr = "Starting now!";
-            notify(ctx,pic,title,descr);
+            notify(ctx, pic, title, descr);
         }
     }
 
-    private static void notify(Context ctx, Bitmap icon, String title, String desc){
+    private static void notify(Context ctx, Bitmap icon, String title, String desc) {
         Log.d(LOG_TAG, "in notify **");
         Intent intent = new Intent(ctx, Dispatcher.class);
         intent.setAction(Intent.CATEGORY_LAUNCHER);
         PendingIntent pIntent = PendingIntent.getActivity(ctx, 0,
                 intent, 0);
         int notificationId = 001;
+
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
         Notification notif = new NotificationCompat.Builder(ctx).
                 setSmallIcon(R.drawable.default_pic).
                 setContentTitle(title).
                 setContentText(desc).
                 setLargeIcon(icon).
-                setContentIntent(pIntent).build()    ;
-        NotificationManager notifM =  (NotificationManager) ctx.getSystemService(ctx.NOTIFICATION_SERVICE);
+                setSound(uri).
+                setContentIntent(pIntent).build();
+        NotificationManager notifM = (NotificationManager) ctx.getSystemService(ctx.NOTIFICATION_SERVICE);
         notifM.notify(notificationId, notif);
     }
-
 
 
 }
