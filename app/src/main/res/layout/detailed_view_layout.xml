@@ -149,13 +149,20 @@
         </LinearLayout>
 
         <!-- Fragment Panel -->
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/slide_up_content"
             android:layout_below="@+id/slide_buttons_panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        </FrameLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_below="@+id/slide_buttons_panel"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
     </RelativeLayout>
 

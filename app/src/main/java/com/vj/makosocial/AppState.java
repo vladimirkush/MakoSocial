@@ -1,7 +1,6 @@
 package com.vj.makosocial;
 
 import android.app.Application;
-
 import com.parse.Parse;
 import com.parse.ParseACL;
 

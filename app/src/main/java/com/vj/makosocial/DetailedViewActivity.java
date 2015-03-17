@@ -1,6 +1,10 @@
 package com.vj.makosocial;
 
-import android.app.ActionBar;
+//import android.app.ActionBar;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -13,21 +17,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
+import Fragments.comment_on_show;
+import Fragments.notify_widget;
+import Fragments.rate_show;
+import Fragments.show_facts;
 import adapters.DetailedViewPicAdapter;
 import animations.ZoomOutPageTransformer;
 import dataHolders.MakoListHolder;
 import dbObjects.MakoEvent;
-
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 
 
 
-public class DetailedViewActivity extends ActionBarActivity {
+public class DetailedViewActivity extends ActionBarActivity
+        implements rate_show.OnFragmentInteractionListener,
+        comment_on_show.OnFragmentInteractionListener,
+        show_facts.OnFragmentInteractionListener,
+        notify_widget.OnFragmentInteractionListener {
 
     private static String POS_TAG = "position";
     private Toolbar toolbar;
@@ -43,8 +52,15 @@ public class DetailedViewActivity extends ActionBarActivity {
     private ImageButton btn_comment;
     private ImageButton btn_facts;
     private ImageButton btn_notif_widg;
+    private ImageButton selected_button;
 
     private SlidingUpPanelLayout mLayout;
+
+    private FragmentManager fm;
+    private Fragment frag_rate;
+    private Fragment frag_comment;
+    private Fragment frag_facts;
+    private Fragment frag_notif_widg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +112,6 @@ public class DetailedViewActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -132,9 +147,16 @@ public class DetailedViewActivity extends ActionBarActivity {
         btn_facts = (ImageButton) findViewById(R.id.btn_facts);
         btn_notif_widg = (ImageButton) findViewById(R.id.btn_notif_and_widget);
 
+        frag_rate = new rate_show();
+        frag_comment = new comment_on_show();
+        frag_facts = new show_facts();
+        frag_notif_widg = new notify_widget();
+        fm = getSupportFragmentManager();
+
     }
 
     private void setListeners() {
+
         btn_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,9 +164,16 @@ public class DetailedViewActivity extends ActionBarActivity {
                     if (mLayout.getPanelState() != PanelState.ANCHORED) {
                         mLayout.setAnchorPoint(0.1f);
                         mLayout.setPanelState(PanelState.ANCHORED);
+                        selected_button = btn_rate;
+                        // change to rate fragment
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.slide_up_content,frag_rate, "rate");
+                        transaction.commit();
                     }
-                    else
+                    else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
+                        selected_button = null;
+                    }
                 }
 
             }
@@ -153,10 +182,19 @@ public class DetailedViewActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (mLayout != null) {
-                    if (mLayout.getPanelState() != PanelState.EXPANDED)
+                    if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
-                    else
+                        selected_button = btn_comment;
+                        // TODO: change to comment fragment
+                    }
+                    else if (selected_button != btn_comment) {
+                        selected_button = btn_comment;
+                        // TODO: change to comment fragment
+                    }
+                    else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
+                        selected_button = null;
+                    }
                 }
 
             }
@@ -165,10 +203,19 @@ public class DetailedViewActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (mLayout != null) {
-                    if (mLayout.getPanelState() != PanelState.EXPANDED)
+                    if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
-                    else
+                        selected_button = btn_facts;
+                        // TODO: change to facts fragment
+                    }
+                    else if (selected_button != btn_facts) {
+                        selected_button = btn_facts;
+                        // TODO: change to facts fragment
+                    }
+                    else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
+                        selected_button = null;
+                    }
                 }
 
             }
@@ -177,10 +224,19 @@ public class DetailedViewActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (mLayout != null) {
-                    if (mLayout.getPanelState() != PanelState.EXPANDED)
+                    if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
-                    else
+                        selected_button = btn_notif_widg;
+                        // TODO: change to notif fragment
+                    }
+                    else if (selected_button != btn_notif_widg) {
+                        selected_button = btn_notif_widg;
+                        // TODO: change to notif fragment
+                    }
+                    else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
+                        selected_button = null;
+                    }
                 }
 
             }
@@ -190,6 +246,11 @@ public class DetailedViewActivity extends ActionBarActivity {
     private  void updateScreen(int pos){
         currMakoEvent = mEvents.get(pos);
         tvDescription.setText(currMakoEvent.getDescription());
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

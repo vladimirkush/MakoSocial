@@ -7,17 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.vj.makosocial.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link rate_show.OnFragmentInteractionListener} interface
+ * {@link notify_widget.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link rate_show#newInstance} factory method to
+ * Use the {@link notify_widget#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class rate_show extends Fragment {
+public class notify_widget extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,11 +36,11 @@ public class rate_show extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment rate_show.
+     * @return A new instance of fragment notify_widget.
      */
     // TODO: Rename and change types and number of parameters
-    public static rate_show newInstance(String param1, String param2) {
-        rate_show fragment = new rate_show();
+    public static notify_widget newInstance(String param1, String param2) {
+        notify_widget fragment = new notify_widget();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -47,7 +48,7 @@ public class rate_show extends Fragment {
         return fragment;
     }
 
-    public rate_show() {
+    public notify_widget() {
         // Required empty public constructor
     }
 
@@ -64,7 +65,7 @@ public class rate_show extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rate_show, container, false);
+        return inflater.inflate(R.layout.fragment_notify, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
