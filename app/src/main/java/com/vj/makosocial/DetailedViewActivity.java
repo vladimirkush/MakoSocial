@@ -185,11 +185,17 @@ public class DetailedViewActivity extends ActionBarActivity
                     if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
                         selected_button = btn_comment;
-                        // TODO: change to comment fragment
+                        // change to comment fragment
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.slide_up_content,frag_comment, "comment");
+                        transaction.commit();
                     }
                     else if (selected_button != btn_comment) {
                         selected_button = btn_comment;
-                        // TODO: change to comment fragment
+                        // change to comment fragment
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.slide_up_content,frag_comment, "comment");
+                        transaction.commit();
                     }
                     else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
@@ -206,11 +212,17 @@ public class DetailedViewActivity extends ActionBarActivity
                     if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
                         selected_button = btn_facts;
-                        // TODO: change to facts fragment
+                        // change to facts fragment
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.slide_up_content,frag_facts, "facts");
+                        transaction.commit();
                     }
                     else if (selected_button != btn_facts) {
                         selected_button = btn_facts;
-                        // TODO: change to facts fragment
+                        // change to facts fragment
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.slide_up_content,frag_facts, "facts");
+                        transaction.commit();
                     }
                     else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
@@ -227,11 +239,17 @@ public class DetailedViewActivity extends ActionBarActivity
                     if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
                         selected_button = btn_notif_widg;
-                        // TODO: change to notif fragment
+                        // change to notif fragment
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.slide_up_content,frag_notif_widg, "notif");
+                        transaction.commit();
                     }
                     else if (selected_button != btn_notif_widg) {
                         selected_button = btn_notif_widg;
-                        // TODO: change to notif fragment
+                        // change to notif fragment
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.slide_up_content,frag_notif_widg, "notif");
+                        transaction.commit();
                     }
                     else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
