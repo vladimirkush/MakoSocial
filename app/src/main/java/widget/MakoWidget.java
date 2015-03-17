@@ -12,8 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -42,6 +40,8 @@ public class MakoWidget extends AppWidgetProvider {
     public final static String STD_FORMAT =         "EEE MMM d HH:mm:ss zz yyyy";
     public final int WIDGET_UPDATE_MILLIS = 60000;
     SharedPreferences sp;
+    private static boolean flag5min = true;
+    private static boolean flag0min = true;
 
     @Override
     public void onEnabled(Context context) {
@@ -214,15 +214,22 @@ public class MakoWidget extends AppWidgetProvider {
 
     private static void raiseNotification(String timer, Context ctx, String title, Bitmap pic) {
         String descr = "";
+
+
         Log.d(LOG_TAG, "in Raise notification");
-        if (timer.equals("0d 0h 5m")) {
+        if (timer.equals("0d 0h 5m") && flag5min) {
             Log.d(LOG_TAG, "5 min ready**");
             descr = "there is only 5 minutes left!";
             notify(ctx, pic, title, descr);
-        } else if (timer.equals("0d 0h 0m")) {
+
+            flag5min=false; // disable further notifications
+
+        } else if (timer.equals("0d 0h 0m") && flag0min) {
             Log.d(LOG_TAG, "0 min ready**");
             descr = "Starting now!";
             notify(ctx, pic, title, descr);
+
+            flag0min=false; // disable further notifications
         }
     }
 
@@ -234,15 +241,17 @@ public class MakoWidget extends AppWidgetProvider {
                 intent, 0);
         int notificationId = 001;
 
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+       // Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Notification notif = new NotificationCompat.Builder(ctx).
-                setSmallIcon(R.drawable.default_pic).
+                setSmallIcon(R.drawable.ic_launcher).
                 setContentTitle(title).
                 setContentText(desc).
                 setLargeIcon(icon).
-                setSound(uri).
+                //setSound(uri).
+                setDefaults(Notification.DEFAULT_SOUND |Notification.DEFAULT_VIBRATE ).
                 setContentIntent(pIntent).build();
+        notif.flags |= Notification.FLAG_AUTO_CANCEL;
         NotificationManager notifM = (NotificationManager) ctx.getSystemService(ctx.NOTIFICATION_SERVICE);
         notifM.notify(notificationId, notif);
     }
