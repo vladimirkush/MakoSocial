@@ -69,11 +69,10 @@
                 android:alpha="0.5"
                 android:id="@+id/login_username"
                 android:textSize="15sp"
-
                 android:background="@drawable/rectangle"
                 android:textColor="@color/background_floating_material_dark"
-
                 android:layout_weight="1"
+                android:gravity="center"
                 android:inputType="text" />
 
         </LinearLayout>
@@ -111,6 +110,7 @@
                 android:textColor="@color/background_floating_material_dark"
                 android:background="@drawable/rectangle"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:inputType="textWebPassword" />
 
         </LinearLayout>
@@ -149,6 +149,7 @@
                 android:background="@drawable/rectangle"
                 android:layout_weight="1"
                 android:hint="repeat password"
+                android:gravity="center"
                 android:textColor="@color/background_floating_material_dark"
 
                 android:inputType="textWebPassword" />

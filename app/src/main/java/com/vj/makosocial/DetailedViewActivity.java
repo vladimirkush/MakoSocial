@@ -21,6 +21,7 @@ import dbObjects.MakoEvent;
 
 
 public class DetailedViewActivity extends ActionBarActivity {
+
     private static String POS_TAG = "position";
     private Toolbar toolbar;
     private ArrayList<MakoEvent> mEvents;
@@ -30,10 +31,10 @@ public class DetailedViewActivity extends ActionBarActivity {
     private Intent incIntent;
     private ActionBar aBar;
 
-    private TextView tvRating;
     private TextView tvDescription;
-    private TextView tvLikes;
-    private TextView tvComments;
+//    private TextView tvRating;
+//    private TextView tvLikes;
+//    private TextView tvComments;
 
     private MakoEvent currMakoEvent;
 
@@ -46,8 +47,6 @@ public class DetailedViewActivity extends ActionBarActivity {
         clickedPos = incIntent.getIntExtra(POS_TAG,0);
         setViews();
 
-
-
         mEvents = MakoListHolder.getmList();
         if (MakoListHolder.isEmpty())
             Log.d("DetailedView:" ,"mEvents static field is empty");
@@ -56,7 +55,6 @@ public class DetailedViewActivity extends ActionBarActivity {
 
         currMakoEvent = mEvents.get(clickedPos);
         updateScreen(clickedPos);
-
 
         // set toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -87,12 +85,6 @@ public class DetailedViewActivity extends ActionBarActivity {
             }
         });
 
-
-
-
-
-
-
     }
 
 
@@ -119,19 +111,19 @@ public class DetailedViewActivity extends ActionBarActivity {
     }
 
     private void setViews(){
-        tvComments = (TextView)findViewById(R.id.tv_det_view_comments);
         tvDescription = (TextView)findViewById(R.id.tv_det_view_Descr);
-        tvRating = (TextView)findViewById(R.id.tv_det_view_rating);
-        tvLikes = (TextView)findViewById(R.id.tv_det_view_likes);
+//        tvComments = (TextView)findViewById(R.id.tv_det_view_comments);
+//        tvRating = (TextView)findViewById(R.id.tv_det_view_rating);
+//        tvLikes = (TextView)findViewById(R.id.tv_det_view_likes);
     }
 
     private  void updateScreen(int pos){
         currMakoEvent = mEvents.get(pos);
 
-        tvComments.setText(currMakoEvent.getNumComments()+"");
         tvDescription.setText(currMakoEvent.getDescription());
-        tvRating.setText(currMakoEvent.getRating()+"");
-        tvLikes.setText(currMakoEvent.getLikes()+"");
+//        tvRating.setText(currMakoEvent.getRating()+"");
+//        tvComments.setText(currMakoEvent.getNumComments()+"");
+//        tvLikes.setText(currMakoEvent.getLikes()+"");
 
     }
 }
