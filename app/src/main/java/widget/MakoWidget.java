@@ -241,14 +241,12 @@ public class MakoWidget extends AppWidgetProvider {
                 intent, 0);
         int notificationId = 001;
 
-       // Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Notification notif = new NotificationCompat.Builder(ctx).
                 setSmallIcon(R.drawable.ic_launcher).
                 setContentTitle(title).
                 setContentText(desc).
                 setLargeIcon(icon).
-                //setSound(uri).
                 setDefaults(Notification.DEFAULT_SOUND |Notification.DEFAULT_VIBRATE ).
                 setContentIntent(pIntent).build();
         notif.flags |= Notification.FLAG_AUTO_CANCEL;
