@@ -5,11 +5,12 @@
     android:gravity="bottom"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    sothree:umanoPanelHeight="68dp"
+    sothree:umanoPanelHeight="70dp"
     sothree:umanoShadowHeight="4dp">
 
     <!-- Main Content -->
     <LinearLayout
+        android:id="@+id/main_content"
         android:orientation="vertical"
         android:weightSum="10"
         android:layout_height="match_parent"
@@ -59,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="15dp"
-                android:text="description"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/black"
                 android:layout_centerInParent="true"/>
@@ -69,160 +70,93 @@
     </LinearLayout>
 
     <!-- Sliding Content -->
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_height="match_parent"
+        android:background="@color/background_floating_material_dark"
         android:layout_width="match_parent">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+        <!-- Buttons Panel -->
+        <LinearLayout
+            android:id="@+id/slide_buttons_panel"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_height="70dp"
+            android:background="#505050"
+            android:layout_width="match_parent">
 
-            <!--Rate-->
+            <RelativeLayout
+                android:id="@+id/rate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/btn_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/mako_icons_star"
+                    android:background="#6e4f4d"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/comment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/btn_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/mako_icons_comment"
+                    android:background="#6e594a"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/facts"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/btn_facts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/mako_icons_facts"
+                    android:background="#4a6354"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/notif_and_widget"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/btn_notif_and_widget"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/mako_icons_notif"
+                    android:background="#495a65"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- Fragment Panel -->
+        <RelativeLayout
+            android:layout_below="@+id/slide_buttons_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <!--Comment-->
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <!--Facts (registers also for widget and push notifications)-->
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <!--Sign up for notifications and go to widget screen-->
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
-
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-              <!--android:layout_width="match_parent"-->
-              <!--android:layout_height="match_parent"-->
-              <!--android:orientation="vertical"-->
-              <!--android:weightSum="1">-->
-
-        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-                      <!--android:layout_width="match_parent"-->
-                      <!--android:layout_height="wrap_content"-->
-                      <!--android:orientation="horizontal"-->
-                      <!--android:weightSum="3"-->
-                      <!--android:id="@+id/linearLayout"-->
-                      <!--android:background="@drawable/rect_backg"-->
-                      <!--android:layout_alignParentBottom="true">-->
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/rect_backg"-->
-                <!--android:clickable="true">-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="70dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:id="@+id/iv_rating_star"-->
-                    <!--android:src="@drawable/rating_star"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:layout_centerHorizontal="true"/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_det_view_rating"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="4.5"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:layout_below="@+id/iv_rating_star"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:textSize="18sp"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:layout_marginBottom="8dp"-->
-                    <!--/>-->
-
-            <!--</RelativeLayout>-->
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/rect_backg"-->
-                <!--android:clickable="true"-->
-                <!-->-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="70dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:id="@+id/iv_comment_cloud"-->
-                    <!--android:src="@drawable/comment_dots"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--/>-->
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_det_view_comments"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="2"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:layout_below="@+id/iv_comment_cloud"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:textSize="18sp"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:layout_marginBottom="8dp"-->
-                    <!--/>-->
-
-            <!--</RelativeLayout>-->
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/rect_backg"-->
-                <!--android:clickable="true"-->
-                <!-->-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="63dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:id="@+id/iv_comment_like"-->
-                    <!--android:src="@drawable/like_t"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--/>-->
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_det_view_likes"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="2"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:layout_below="@+id/iv_comment_like"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:textSize="18sp"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:layout_marginBottom="8dp"-->
-                    <!--/>-->
-            <!--</RelativeLayout>-->
-        <!--</LinearLayout>-->
-
-<!--</RelativeLayout>-->

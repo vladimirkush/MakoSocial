@@ -18,8 +18,8 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_detailed_view">DetailedViewActivity</string>
     <string name="title_activity_dispathcer">Mako Social</string>
-
     <string name="widget_name">Mako Social</string>
     <string name="title_activity_widget_config">WidgetConfigActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,6 +20,11 @@ import adapters.DetailedViewPicAdapter;
 import animations.ZoomOutPageTransformer;
 import dataHolders.MakoListHolder;
 import dbObjects.MakoEvent;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
+
 
 
 public class DetailedViewActivity extends ActionBarActivity {
@@ -29,14 +36,15 @@ public class DetailedViewActivity extends ActionBarActivity {
     private PagerAdapter pagerAdapter;
     private int clickedPos;
     private Intent incIntent;
-    private ActionBar aBar;
 
     private TextView tvDescription;
-//    private TextView tvRating;
-//    private TextView tvLikes;
-//    private TextView tvComments;
-
     private MakoEvent currMakoEvent;
+    private ImageButton btn_rate;
+    private ImageButton btn_comment;
+    private ImageButton btn_facts;
+    private ImageButton btn_notif_widg;
+
+    private SlidingUpPanelLayout mLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class DetailedViewActivity extends ActionBarActivity {
         incIntent = getIntent();
         clickedPos = incIntent.getIntExtra(POS_TAG,0);
         setViews();
+        setListeners();
 
         mEvents = MakoListHolder.getmList();
         if (MakoListHolder.isEmpty())
@@ -112,18 +121,75 @@ public class DetailedViewActivity extends ActionBarActivity {
 
     private void setViews(){
         tvDescription = (TextView)findViewById(R.id.tv_det_view_Descr);
-//        tvComments = (TextView)findViewById(R.id.tv_det_view_comments);
-//        tvRating = (TextView)findViewById(R.id.tv_det_view_rating);
-//        tvLikes = (TextView)findViewById(R.id.tv_det_view_likes);
+
+        // SlidingPanel settings
+        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        mLayout.setPanelState(PanelState.COLLAPSED);
+        mLayout.setTouchEnabled(false);
+
+        btn_rate = (ImageButton) findViewById(R.id.btn_rate);
+        btn_comment = (ImageButton) findViewById(R.id.btn_comment);
+        btn_facts = (ImageButton) findViewById(R.id.btn_facts);
+        btn_notif_widg = (ImageButton) findViewById(R.id.btn_notif_and_widget);
+
+    }
+
+    private void setListeners() {
+        btn_rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLayout != null) {
+                    if (mLayout.getPanelState() != PanelState.ANCHORED) {
+                        mLayout.setAnchorPoint(0.1f);
+                        mLayout.setPanelState(PanelState.ANCHORED);
+                    }
+                    else
+                        mLayout.setPanelState(PanelState.COLLAPSED);
+                }
+
+            }
+        });
+        btn_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLayout != null) {
+                    if (mLayout.getPanelState() != PanelState.EXPANDED)
+                        mLayout.setPanelState(PanelState.EXPANDED);
+                    else
+                        mLayout.setPanelState(PanelState.COLLAPSED);
+                }
+
+            }
+        });
+        btn_facts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLayout != null) {
+                    if (mLayout.getPanelState() != PanelState.EXPANDED)
+                        mLayout.setPanelState(PanelState.EXPANDED);
+                    else
+                        mLayout.setPanelState(PanelState.COLLAPSED);
+                }
+
+            }
+        });
+        btn_notif_widg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLayout != null) {
+                    if (mLayout.getPanelState() != PanelState.EXPANDED)
+                        mLayout.setPanelState(PanelState.EXPANDED);
+                    else
+                        mLayout.setPanelState(PanelState.COLLAPSED);
+                }
+
+            }
+        });
     }
 
     private  void updateScreen(int pos){
         currMakoEvent = mEvents.get(pos);
-
         tvDescription.setText(currMakoEvent.getDescription());
-//        tvRating.setText(currMakoEvent.getRating()+"");
-//        tvComments.setText(currMakoEvent.getNumComments()+"");
-//        tvLikes.setText(currMakoEvent.getLikes()+"");
 
     }
 }
