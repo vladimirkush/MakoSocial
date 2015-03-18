@@ -9,10 +9,10 @@
 
     <!-  Share, should appear as action button -->
     <item android:id="@+id/menu_action_share"
-          android:title="@string/action_share"
-          android:orderInCategory="100"
-          android:icon="@drawable/share_white"
-          app:showAsAction="always"
-          app:actionProviderClass=
-              "android.support.v7.widget.ShareActionProvider"/>
+        android:title="@string/action_share"
+        android:orderInCategory="100"
+        android:icon="@drawable/share_white"
+        app:showAsAction="always"
+        app:actionProviderClass=
+            "android.support.v7.widget.ShareActionProvider"/>
 </menu>

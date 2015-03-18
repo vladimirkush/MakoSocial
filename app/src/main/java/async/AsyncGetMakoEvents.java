@@ -30,6 +30,7 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
     private final String RATING_COL         = "Rating";
     private final String NUM_RATED_COL      = "numRated";
     private final String PICTURE_COL        = "Picture";
+    private final String LINK_COL           = "Link";
     private final String PARSE_LOGCAT_TAG   = "Parse";
     private final String WIDGET_LOGCAT_TAG   = "widget";
 
@@ -75,6 +76,7 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
                 mEvent.setName(i.getString(NAME_COL));
                 mEvent.setRating((float)i.getDouble(RATING_COL));
                 mEvent.setStartDate(i.getDate(START_DATE_COL));
+                mEvent.setLink(i.getString(LINK_COL));
 
                 //get picture
                 ParseFile file = (ParseFile) i.get(PICTURE_COL);

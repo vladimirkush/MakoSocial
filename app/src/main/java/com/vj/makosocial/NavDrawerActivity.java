@@ -2,7 +2,6 @@ package com.vj.makosocial;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -82,8 +81,8 @@ public class NavDrawerActivity extends ActionBarActivity {
         MenuItem share = menu.findItem(R.id.menu_action_share);
 
         // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
-        setShareIntent(getShareIntent());
+        //mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
+        //setShareIntent(getShareIntent());
 
         return true;
     }
@@ -120,9 +119,9 @@ public class NavDrawerActivity extends ActionBarActivity {
         }
     }
 
-    private Intent getShareIntent() {
+    private Intent getShareIntent( String url) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
         shareIntent.setType("text/plain");
         return shareIntent;
     }

@@ -17,11 +17,14 @@ public class MakoEvent {
     private Date startDate;
     private int likes;
     private String description;
+    private String link;
     private ArrayList<Comment> comments;
 
     public MakoEvent(){
 
     }
+
+
 
     public MakoEvent(String id, String name, float rating, Bitmap picture, Date startDate,
                      int likes, String description, ArrayList<Comment> comments) {
@@ -97,6 +100,14 @@ public class MakoEvent {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public int getNumComments(){
