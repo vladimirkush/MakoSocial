@@ -2,8 +2,15 @@ package dbObjects;
 
 import android.graphics.Bitmap;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class holds a row that represents a Mako event
@@ -17,14 +24,14 @@ public class MakoEvent {
     private Date startDate;
     private int likes;
     private String description;
-    private ArrayList<Comment> comments;
+    private ArrayList<HashMap<String, String>> comments;
 
     public MakoEvent(){
-
+        comments = new ArrayList<HashMap<String, String>>();
     }
 
     public MakoEvent(String id, String name, float rating, Bitmap picture, Date startDate,
-                     int likes, String description, ArrayList<Comment> comments) {
+                     int likes, String description, ArrayList<HashMap<String, String>> comments) {
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -75,13 +82,23 @@ public class MakoEvent {
         this.description = description;
     }
 
-    public ArrayList<Comment> getComments() {
+    public ArrayList<HashMap<String, String>> getComments() {
         return comments;
     }
 
-    public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
-    }
+    public void populateComments(JSONArray jsonArray) throws JSONException {
+        if (jsonArray != null) {
+            for (int i=0 ; i < jsonArray.length(); i++){
+
+                Gson gson = new Gson();
+                String jsonStr = jsonArray.get(i).toString();
+                HashMap<String, String> comment = new HashMap<String, String>();
+
+                comment = gson.fromJson(jsonStr, comment.getClass());
+                comments.add(comment);
+            }
+        }
+    };
 
     public String getName() {
         return name;
@@ -100,9 +117,8 @@ public class MakoEvent {
     }
 
     public int getNumComments(){
-        if(comments==null)
-            return 0;
-        else
+        if(comments!=null)
             return comments.size();
+        return 0;
     }
 }

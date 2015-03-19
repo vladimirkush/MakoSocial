@@ -13,6 +13,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
     private final String NUM_RATED_COL      = "numRated";
     private final String PICTURE_COL        = "Picture";
     private final String PARSE_LOGCAT_TAG   = "Parse";
-    private final String WIDGET_LOGCAT_TAG   = "widget";
+    private final String WIDGET_LOGCAT_TAG  = "widget";
+    private final String COMMENTS_COL       = "CommentsArr";
 
     private Context context;
     private ArrayList<MakoEvent>    makoEventsList;
@@ -52,7 +55,6 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
         progressDialog.setMessage("Fetching Mako data...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
     }
 
     @Override
@@ -75,6 +77,11 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
                 mEvent.setName(i.getString(NAME_COL));
                 mEvent.setRating((float)i.getDouble(RATING_COL));
                 mEvent.setStartDate(i.getDate(START_DATE_COL));
+                try {
+                    mEvent.populateComments(i.getJSONArray(COMMENTS_COL));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 //get picture
                 ParseFile file = (ParseFile) i.get(PICTURE_COL);

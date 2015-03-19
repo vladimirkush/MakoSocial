@@ -7,7 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
 import com.vj.makosocial.R;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +31,10 @@ public class rate_show extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View view;
+    private RatingBar ratingBar;
+    private TextView ratingNum;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +73,20 @@ public class rate_show extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rate_show, container, false);
+        view = inflater.inflate(R.layout.fragment_rate_show, container, false);
+        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+        ratingNum = (TextView) view.findViewById(R.id.ratingNum);
+        ratingNum.setText(""+ratingBar.getRating());
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                // TODO: update on database
+                ratingNum.setText(""+ratingBar.getRating());
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

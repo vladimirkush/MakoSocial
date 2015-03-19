@@ -53,7 +53,7 @@ public class NavDrawerActivity extends ActionBarActivity {
         lvMakoEvents = (ListView) findViewById(R.id.lvMakoEvents);
 
         //set adapter
-        ListViewMakoAdapter adapter = new ListViewMakoAdapter( this);
+        ListViewMakoAdapter adapter = new ListViewMakoAdapter(this);
         lvMakoEvents.setAdapter(adapter);
 
         // download entities from Parse (asynctask)

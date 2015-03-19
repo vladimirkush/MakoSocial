@@ -1,6 +1,5 @@
 package com.vj.makosocial;
 
-//import android.app.ActionBar;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,8 +28,6 @@ import dbObjects.MakoEvent;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
-
-
 
 public class DetailedViewActivity extends ActionBarActivity
         implements rate_show.OnFragmentInteractionListener,
