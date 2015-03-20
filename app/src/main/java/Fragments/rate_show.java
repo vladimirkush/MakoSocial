@@ -98,13 +98,15 @@ public class rate_show extends Fragment {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 // TODO: update on database
 
+                // Client side rating re-calculation
+                // as Parse.com doesn't allow server side calcs
+
                 float curRating = currMakoEvent.getRating();
                 int curNumRated = currMakoEvent.getNumRated();
                 final float userRated = ratingBar.getRating();
                 int newNumRated = curNumRated + 1;
                 final float newRating = ((curRating*curNumRated)+userRated)/newNumRated;
-//                ((curRating + userRated/newNumRated) <= 5) ?
-//                        curRating + userRated/newNumRated : 5;
+
 
                 String id = currMakoEvent.getId();
                 ParseObject pointer = ParseObject.createWithoutData("MakoEvent", id);

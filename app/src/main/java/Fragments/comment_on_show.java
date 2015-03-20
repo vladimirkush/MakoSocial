@@ -4,41 +4,46 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
+import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link comment_on_show.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link comment_on_show#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.DecimalFormat;
+import java.util.HashMap;
+
+import adapters.EventCommentsListAdapter;
+import dbObjects.MakoEvent;
+
 public class comment_on_show extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    DetailedViewActivity parent;
+    private MakoEvent currMakoEvent;
+
+    private View view;
+    private ListView listOfComments;
+    EventCommentsListAdapter adapter;
+
+    EditText newComment;
+    Button sendComment;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment comment_on_show.
-     */
-    // TODO: Rename and change types and number of parameters
     public static comment_on_show newInstance(String param1, String param2) {
         comment_on_show fragment = new comment_on_show();
         Bundle args = new Bundle();
@@ -59,13 +64,65 @@ public class comment_on_show extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        parent = (DetailedViewActivity)getActivity();
+        currMakoEvent = parent.getCurrMakoEvent();
+
+        view = inflater.inflate(R.layout.fragment_comment_on_show, container, false);
+        newComment = (EditText) view.findViewById(R.id.new_comment);
+        sendComment = (Button) view.findViewById(R.id.send_comment);
+
+        listOfComments = (ListView) view.findViewById(R.id.list_of_comments);
+        adapter = new EventCommentsListAdapter(currMakoEvent.getComments(), getActivity().getBaseContext());
+        listOfComments.setAdapter(adapter);
+
+        sendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (newComment == null)
+                    return;
+
+                if (newComment.getText().toString() == "")
+                    return;
+
+                final HashMap<String, String> comment = new HashMap<String, String>();
+                comment.put("key","value");
+                currMakoEvent.getComments().add(comment);
+
+                String updatedComments = currMakoEvent.getComments().toString();
+
+                String id = currMakoEvent.getId();
+                ParseObject pointer = ParseObject.createWithoutData("MakoEvent", id);
+                pointer.put(MakoEvent.COMMENTS_COL, updatedComments);
+
+                // TODO: comments not updated on parse.com.
+                // Save
+                pointer.saveInBackground(new SaveCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // TODO: new comment not showing. keyboard not closed.
+                            // Saved successfully.
+                            currMakoEvent.getComments().add(comment);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            // The save failed.
+                            Log.d("Update Comments", e.toString());
+                        }
+                    }
+                });
+
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comment_on_show, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,16 +149,7 @@ public class comment_on_show extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);

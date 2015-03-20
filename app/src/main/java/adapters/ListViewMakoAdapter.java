@@ -8,11 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import com.vj.makosocial.R;
-
 import java.util.ArrayList;
-
 import dbObjects.MakoEvent;
 
 public class ListViewMakoAdapter extends BaseAdapter {

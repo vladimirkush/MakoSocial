@@ -4,7 +4,6 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseACL;
 
-
 public class AppState extends Application {
 
     @Override
