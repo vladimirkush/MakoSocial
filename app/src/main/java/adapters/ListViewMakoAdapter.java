@@ -77,9 +77,8 @@ public class ListViewMakoAdapter extends BaseAdapter {
 
         //assign values
         holder.eventName.setText(makoEvents.get(position).getName());
-        holder.eventDescr.setText(makoEvents.get(position).getDescription());
+        holder.eventDescr.setText(makoEvents.get(position).getShortDescription());
         holder.likes.setText(makoEvents.get(position).getLikes()+"");
-        //holder.comments.setText(makoEvents.get(position).getComments());
         holder.pic.setImageBitmap(makoEvents.get(position).getPicture());
         holder.ratingBar.setRating(makoEvents.get(position).getRating());
 

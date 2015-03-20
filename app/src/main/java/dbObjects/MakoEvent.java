@@ -17,21 +17,33 @@ import java.util.Map;
  */
 public class MakoEvent {
 
+    public final static String NAME_COL           = "Name";
+    public final static String DESCRIPTION_COL    = "Description";
+    public final static String NUM_LIKES_COL      = "NumLikes";
+    public final static String START_DATE_COL     = "StartDate";
+    public final static String RATING_COL         = "Rating";
+    public final static String NUM_RATED_COL      = "numRated";
+    public final static String PICTURE_COL        = "Picture";
+    public final static String COMMENTS_COL       = "CommentsArr";
+    public final static String SHORD_DESC_COL     = "ShortDescription";
+
     private String id;
     private String name;
     private float rating;
     private Bitmap picture;
     private Date startDate;
     private int likes;
+    private int numRated;
     private String description;
+    private String shortDescription;
     private ArrayList<HashMap<String, String>> comments;
 
     public MakoEvent(){
         comments = new ArrayList<HashMap<String, String>>();
     }
 
-    public MakoEvent(String id, String name, float rating, Bitmap picture, Date startDate,
-                     int likes, String description, ArrayList<HashMap<String, String>> comments) {
+    public MakoEvent(String id, String name, float rating, int numRated, Bitmap picture, Date startDate,
+                     int likes, String description, String shortDescription, ArrayList<HashMap<String, String>> comments) {
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -39,8 +51,14 @@ public class MakoEvent {
         this.startDate = startDate;
         this.likes = likes;
         this.description = description;
+        this.shortDescription = shortDescription;
         this.comments = comments;
+        this.numRated = numRated;
     }
+
+    public int getNumRated() { return numRated; }
+
+    public void setNumRated(int numRated) { this.numRated = numRated; }
 
     public float getRating() {
         return rating;
@@ -80,6 +98,14 @@ public class MakoEvent {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public ArrayList<HashMap<String, String>> getComments() {

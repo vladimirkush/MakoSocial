@@ -41,7 +41,6 @@ public class DetailedViewActivity extends ActionBarActivity
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private int clickedPos;
-    private Intent incIntent;
 
     private TextView tvDescription;
     private MakoEvent currMakoEvent;
@@ -64,8 +63,7 @@ public class DetailedViewActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailed_view_layout);
 
-        incIntent = getIntent();
-        clickedPos = incIntent.getIntExtra(POS_TAG,0);
+        clickedPos = getIntent().getIntExtra(POS_TAG,0);
         setViews();
         setListeners();
 
@@ -107,6 +105,10 @@ public class DetailedViewActivity extends ActionBarActivity
             }
         });
 
+    }
+
+    public MakoEvent getCurrMakoEvent() {
+        return currMakoEvent;
     }
 
     @Override

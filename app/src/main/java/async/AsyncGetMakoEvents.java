@@ -25,16 +25,20 @@ import dbObjects.MakoEvent;
 
 public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>> {
 
-    private final String NAME_COL           = "Name";
-    private final String DESCRIPTION_COL    = "Description";
-    private final String NUM_LIKES_COL      = "NumLikes";
-    private final String START_DATE_COL     = "StartDate";
-    private final String RATING_COL         = "Rating";
-    private final String NUM_RATED_COL      = "numRated";
-    private final String PICTURE_COL        = "Picture";
-    private final String PARSE_LOGCAT_TAG   = "Parse";
-    private final String WIDGET_LOGCAT_TAG  = "widget";
-    private final String COMMENTS_COL       = "CommentsArr";
+//    private final String NAME_COL           = "Name";
+//    private final String DESCRIPTION_COL    = "Description";
+//    private final String NUM_LIKES_COL      = "NumLikes";
+//    private final String START_DATE_COL     = "StartDate";
+//    private final String RATING_COL         = "Rating";
+//    private final String NUM_RATED_COL      = "numRated";
+//    private final String PICTURE_COL        = "Picture";
+//    private final String PARSE_LOGCAT_TAG   = "Parse";
+//    private final String WIDGET_LOGCAT_TAG  = "widget";
+//    private final String COMMENTS_COL       = "CommentsArr";
+//    private final String SHORD_DESC_COL     = "ShortDescription";
+
+    public final static String PARSE_LOGCAT_TAG   = "Parse";
+    public final static String WIDGET_LOGCAT_TAG  = "widget";
 
     private Context context;
     private ArrayList<MakoEvent>    makoEventsList;
@@ -72,19 +76,21 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
                 MakoEvent mEvent = new MakoEvent();
 
                 mEvent.setId(i.getObjectId());
-                mEvent.setDescription(i.getString(DESCRIPTION_COL));
-                mEvent.setLikes(i.getInt(NUM_LIKES_COL));
-                mEvent.setName(i.getString(NAME_COL));
-                mEvent.setRating((float)i.getDouble(RATING_COL));
-                mEvent.setStartDate(i.getDate(START_DATE_COL));
+                mEvent.setDescription(i.getString(MakoEvent.DESCRIPTION_COL));
+                mEvent.setShortDescription(i.getString(MakoEvent.SHORD_DESC_COL));
+                mEvent.setLikes(i.getInt(MakoEvent.NUM_LIKES_COL));
+                mEvent.setName(i.getString(MakoEvent.NAME_COL));
+                mEvent.setRating((float)i.getDouble(MakoEvent.RATING_COL));
+                mEvent.setStartDate(i.getDate(MakoEvent.START_DATE_COL));
+                mEvent.setNumRated(i.getInt(MakoEvent.NUM_RATED_COL));
                 try {
-                    mEvent.populateComments(i.getJSONArray(COMMENTS_COL));
+                    mEvent.populateComments(i.getJSONArray(MakoEvent.COMMENTS_COL));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 //get picture
-                ParseFile file = (ParseFile) i.get(PICTURE_COL);
+                ParseFile file = (ParseFile) i.get(MakoEvent.PICTURE_COL);
                 try {
                     byte[] picBytes = file.getData();
                     Bitmap bmp = BitmapFactory.decodeByteArray(picBytes, 0, picBytes.length);

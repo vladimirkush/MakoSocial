@@ -4,15 +4,25 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
+import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
 
 import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+
+import dbObjects.MakoEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,10 +41,12 @@ public class rate_show extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     private View view;
     private RatingBar ratingBar;
     private TextView ratingNum;
+
+    DetailedViewActivity parent;
+    private MakoEvent currMakoEvent;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,11 +90,40 @@ public class rate_show extends Fragment {
         ratingNum = (TextView) view.findViewById(R.id.ratingNum);
         ratingNum.setText(""+ratingBar.getRating());
 
+        parent = (DetailedViewActivity)getActivity();
+        currMakoEvent = parent.getCurrMakoEvent();
+
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 // TODO: update on database
-                ratingNum.setText(""+ratingBar.getRating());
+
+                float curRating = currMakoEvent.getRating();
+                int curNumRated = currMakoEvent.getNumRated();
+                final float userRated = ratingBar.getRating();
+                int newNumRated = curNumRated + 1;
+                final float newRating = ((curRating*curNumRated)+userRated)/newNumRated;
+//                ((curRating + userRated/newNumRated) <= 5) ?
+//                        curRating + userRated/newNumRated : 5;
+
+                String id = currMakoEvent.getId();
+                ParseObject pointer = ParseObject.createWithoutData("MakoEvent", id);
+                pointer.put(MakoEvent.RATING_COL, Float.parseFloat(new DecimalFormat("#.#").format(newRating)));
+                pointer.put(MakoEvent.NUM_RATED_COL, newNumRated);
+
+                // Save
+                pointer.saveInBackground(new SaveCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // Saved successfully.
+                            ratingNum.setText(new DecimalFormat("#.#").format(userRated));
+                        } else {
+                            // The save failed.
+                            Log.d("Update Rating", e.toString());
+                        }
+                    }
+                });
+
             }
         });
 
