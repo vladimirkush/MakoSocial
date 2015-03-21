@@ -25,18 +25,6 @@ import dbObjects.MakoEvent;
 
 public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>> {
 
-//    private final String NAME_COL           = "Name";
-//    private final String DESCRIPTION_COL    = "Description";
-//    private final String NUM_LIKES_COL      = "NumLikes";
-//    private final String START_DATE_COL     = "StartDate";
-//    private final String RATING_COL         = "Rating";
-//    private final String NUM_RATED_COL      = "numRated";
-//    private final String PICTURE_COL        = "Picture";
-//    private final String PARSE_LOGCAT_TAG   = "Parse";
-//    private final String WIDGET_LOGCAT_TAG  = "widget";
-//    private final String COMMENTS_COL       = "CommentsArr";
-//    private final String SHORD_DESC_COL     = "ShortDescription";
-
     public final static String PARSE_LOGCAT_TAG   = "Parse";
     public final static String WIDGET_LOGCAT_TAG  = "widget";
 

@@ -32,11 +32,11 @@ public class comment_on_show extends Fragment {
     private MakoEvent currMakoEvent;
 
     private View view;
-    private ListView listOfComments;
-    EventCommentsListAdapter adapter;
+    private ListView listView_comments;
+    EventCommentsListAdapter listView_adapter;
 
     EditText editText_newComment;
-    Button sendComment;
+    Button button_sendComment;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -78,13 +78,13 @@ public class comment_on_show extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_comment_on_show, container, false);
         editText_newComment = (EditText) view.findViewById(R.id.new_comment);
-        sendComment = (Button) view.findViewById(R.id.send_comment);
+        button_sendComment = (Button) view.findViewById(R.id.send_comment);
 
-        listOfComments = (ListView) view.findViewById(R.id.list_of_comments);
-        adapter = new EventCommentsListAdapter(currMakoEvent.getComments(), getActivity().getBaseContext());
-        listOfComments.setAdapter(adapter);
+        listView_comments = (ListView) view.findViewById(R.id.list_of_comments);
+        listView_adapter = new EventCommentsListAdapter(currMakoEvent.getComments(), getActivity().getBaseContext());
+        listView_comments.setAdapter(listView_adapter);
 
-        sendComment.setOnClickListener(new View.OnClickListener() {
+        button_sendComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -108,7 +108,7 @@ public class comment_on_show extends Fragment {
                     public void done(ParseException e) {
                         if (e == null) {
                             // Saved successfully.
-                            adapter.notifyDataSetChanged();
+                            listView_adapter.notifyDataSetChanged();
                             editText_newComment.setText("");
                             InputMethodManager imm = (InputMethodManager) parentActivity.getSystemService(
                                     Context.INPUT_METHOD_SERVICE);
