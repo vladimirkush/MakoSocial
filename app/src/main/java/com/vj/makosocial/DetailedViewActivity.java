@@ -1,10 +1,10 @@
 package com.vj.makosocial;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -26,7 +26,6 @@ import animations.ZoomOutPageTransformer;
 import dataHolders.MakoListHolder;
 import dbObjects.MakoEvent;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 
 public class DetailedViewActivity extends ActionBarActivity
@@ -65,6 +64,7 @@ public class DetailedViewActivity extends ActionBarActivity
 
         clickedPos = getIntent().getIntExtra(POS_TAG,0);
         setViews();
+        createFragments();
         setListeners();
 
         mEvents = MakoListHolder.getmList();
@@ -97,6 +97,8 @@ public class DetailedViewActivity extends ActionBarActivity
             public void onPageSelected(int i) {
                 updateScreen(i);
                 getSupportActionBar().setTitle(currMakoEvent.getName());
+                createFragments();
+
             }
 
             @Override
@@ -133,6 +135,14 @@ public class DetailedViewActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void createFragments() {
+        frag_rate = new rate_show();
+        frag_comment = new comment_on_show();
+        frag_facts = new show_facts();
+        frag_notif_widg = new notify_widget();
+        fm = getSupportFragmentManager();
+    }
+
     private void setViews(){
         tvDescription = (TextView)findViewById(R.id.tv_det_view_Descr);
 
@@ -146,11 +156,50 @@ public class DetailedViewActivity extends ActionBarActivity
         btn_facts = (ImageButton) findViewById(R.id.btn_facts);
         btn_notif_widg = (ImageButton) findViewById(R.id.btn_notif_and_widget);
 
-        frag_rate = new rate_show();
-        frag_comment = new comment_on_show();
-        frag_facts = new show_facts();
-        frag_notif_widg = new notify_widget();
-        fm = getSupportFragmentManager();
+    }
+
+    private void selectButton(ImageButton btn) {
+        selected_button = btn;
+
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        // Set Colors + Select Fragment
+        if (btn_rate == btn) {
+            deselectAllButtons();
+            selected_button = btn;
+            btn_rate.setBackgroundColor(Color.parseColor("#a85f5a"));
+            transaction.replace(R.id.slide_up_content, frag_rate, "rate");
+        }
+        if (btn_comment == btn) {
+            deselectAllButtons();
+            selected_button = btn;
+            btn_comment.setBackgroundColor(Color.parseColor("#ac866b"));
+            transaction.replace(R.id.slide_up_content,frag_comment, "comment");
+        }
+        if (btn_facts == btn) {
+            deselectAllButtons();
+            selected_button = btn;
+            btn_facts.setBackgroundColor(Color.parseColor("#7fa87f"));
+            transaction.replace(R.id.slide_up_content,frag_facts, "facts");
+        }
+        if (btn_notif_widg == btn) {
+            deselectAllButtons();
+            selected_button = btn;
+            btn_notif_widg.setBackgroundColor(Color.parseColor("#457a9c"));
+            transaction.replace(R.id.slide_up_content,frag_notif_widg, "notif");
+        }
+
+        // Change fragment
+        transaction.commit();
+
+    }
+
+    private void deselectAllButtons() {
+        selected_button = null;
+        btn_rate.setBackgroundColor(Color.parseColor("#6e4f4d"));
+        btn_comment.setBackgroundColor(Color.parseColor("#6e594a"));
+        btn_facts.setBackgroundColor(Color.parseColor("#4a6354"));
+        btn_notif_widg.setBackgroundColor(Color.parseColor("#495a65"));
 
     }
 
@@ -163,15 +212,11 @@ public class DetailedViewActivity extends ActionBarActivity
                     if (mLayout.getPanelState() != PanelState.ANCHORED) {
                         mLayout.setAnchorPoint(0.1f);
                         mLayout.setPanelState(PanelState.ANCHORED);
-                        selected_button = btn_rate;
-                        // change to rate fragment
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.slide_up_content,frag_rate, "rate");
-                        transaction.commit();
+                        selectButton(btn_rate);
                     }
                     else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
-                        selected_button = null;
+                        deselectAllButtons();
                     }
                 }
 
@@ -183,22 +228,14 @@ public class DetailedViewActivity extends ActionBarActivity
                 if (mLayout != null) {
                     if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
-                        selected_button = btn_comment;
-                        // change to comment fragment
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.slide_up_content,frag_comment, "comment");
-                        transaction.commit();
+                        selectButton(btn_comment);
                     }
                     else if (selected_button != btn_comment) {
-                        selected_button = btn_comment;
-                        // change to comment fragment
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.slide_up_content,frag_comment, "comment");
-                        transaction.commit();
+                        selectButton(btn_comment);
                     }
                     else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
-                        selected_button = null;
+                        deselectAllButtons();
                     }
                 }
 
@@ -210,22 +247,14 @@ public class DetailedViewActivity extends ActionBarActivity
                 if (mLayout != null) {
                     if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
-                        selected_button = btn_facts;
-                        // change to facts fragment
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.slide_up_content,frag_facts, "facts");
-                        transaction.commit();
+                        selectButton(btn_facts);
                     }
                     else if (selected_button != btn_facts) {
-                        selected_button = btn_facts;
-                        // change to facts fragment
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.slide_up_content,frag_facts, "facts");
-                        transaction.commit();
+                        selectButton(btn_facts);
                     }
                     else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
-                        selected_button = null;
+                        deselectAllButtons();
                     }
                 }
 
@@ -237,22 +266,14 @@ public class DetailedViewActivity extends ActionBarActivity
                 if (mLayout != null) {
                     if (mLayout.getPanelState() != PanelState.EXPANDED) {
                         mLayout.setPanelState(PanelState.EXPANDED);
-                        selected_button = btn_notif_widg;
-                        // change to notif fragment
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.slide_up_content,frag_notif_widg, "notif");
-                        transaction.commit();
+                        selectButton(btn_notif_widg);
                     }
                     else if (selected_button != btn_notif_widg) {
-                        selected_button = btn_notif_widg;
-                        // change to notif fragment
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.slide_up_content,frag_notif_widg, "notif");
-                        transaction.commit();
+                        selectButton(btn_notif_widg);
                     }
                     else {
                         mLayout.setPanelState(PanelState.COLLAPSED);
-                        selected_button = null;
+                        deselectAllButtons();
                     }
                 }
 
@@ -264,6 +285,16 @@ public class DetailedViewActivity extends ActionBarActivity
         currMakoEvent = mEvents.get(pos);
         tvDescription.setText(currMakoEvent.getDescription());
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mLayout != null) {
+            if (mLayout.getPanelState() != PanelState.COLLAPSED){
+                mLayout.setPanelState(PanelState.COLLAPSED);
+                deselectAllButtons();
+            } else finish();
+        } else finish();
     }
 
     @Override

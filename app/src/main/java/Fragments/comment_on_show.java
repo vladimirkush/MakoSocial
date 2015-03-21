@@ -16,12 +16,11 @@ import android.widget.ListView;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import adapters.EventCommentsListAdapter;
@@ -29,14 +28,14 @@ import dbObjects.MakoEvent;
 
 public class comment_on_show extends Fragment {
 
-    DetailedViewActivity parent;
+    DetailedViewActivity parentActivity;
     private MakoEvent currMakoEvent;
 
     private View view;
     private ListView listOfComments;
     EventCommentsListAdapter adapter;
 
-    EditText newComment;
+    EditText editText_newComment;
     Button sendComment;
 
     private static final String ARG_PARAM1 = "param1";
@@ -74,11 +73,11 @@ public class comment_on_show extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        parent = (DetailedViewActivity)getActivity();
-        currMakoEvent = parent.getCurrMakoEvent();
+        parentActivity = (DetailedViewActivity)getActivity();
+        currMakoEvent = parentActivity.getCurrMakoEvent();
 
         view = inflater.inflate(R.layout.fragment_comment_on_show, container, false);
-        newComment = (EditText) view.findViewById(R.id.new_comment);
+        editText_newComment = (EditText) view.findViewById(R.id.new_comment);
         sendComment = (Button) view.findViewById(R.id.send_comment);
 
         listOfComments = (ListView) view.findViewById(R.id.list_of_comments);
@@ -89,34 +88,29 @@ public class comment_on_show extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (newComment == null)
+                if (editText_newComment == null)
                     return;
 
-                if (newComment.getText().toString().matches(""))
+                if (editText_newComment.getText().toString().matches(""))
                     return;
 
                 final HashMap<String, String> comment = new HashMap<String, String>();
-                comment.put("whoCommented","person");
-                comment.put("theComment","comment");
+                comment.put("whoCommented", ParseUser.getCurrentUser().getString("username"));
+                comment.put("theComment", editText_newComment.getText().toString());
                 currMakoEvent.getComments().add(comment);
-
-//                ArrayList<> updatedComments = currMakoEvent.getComments().toString();
 
                 String id = currMakoEvent.getId();
                 ParseObject pointer = ParseObject.createWithoutData("MakoEvent", id);
                 pointer.put(MakoEvent.COMMENTS_COL, currMakoEvent.getComments());
 
-                // TODO: comments not updated on parse.com.
                 // Save
                 pointer.saveInBackground(new SaveCallback() {
                     public void done(ParseException e) {
                         if (e == null) {
-                            // TODO: keyboard not closed.
                             // Saved successfully.
-                            currMakoEvent.getComments().add(comment);
                             adapter.notifyDataSetChanged();
-                            newComment.setText("");
-                            InputMethodManager imm = (InputMethodManager) parent.getSystemService(
+                            editText_newComment.setText("");
+                            InputMethodManager imm = (InputMethodManager) parentActivity.getSystemService(
                                     Context.INPUT_METHOD_SERVICE);
                             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
