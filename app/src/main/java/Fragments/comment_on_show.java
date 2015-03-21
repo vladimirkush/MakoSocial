@@ -1,6 +1,7 @@
 package Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -19,6 +21,7 @@ import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import adapters.EventCommentsListAdapter;
@@ -89,31 +92,38 @@ public class comment_on_show extends Fragment {
                 if (newComment == null)
                     return;
 
-                if (newComment.getText().toString() == "")
+                if (newComment.getText().toString().matches(""))
                     return;
 
                 final HashMap<String, String> comment = new HashMap<String, String>();
-                comment.put("key","value");
+                comment.put("whoCommented","person");
+                comment.put("theComment","comment");
                 currMakoEvent.getComments().add(comment);
 
-                String updatedComments = currMakoEvent.getComments().toString();
+//                ArrayList<> updatedComments = currMakoEvent.getComments().toString();
 
                 String id = currMakoEvent.getId();
                 ParseObject pointer = ParseObject.createWithoutData("MakoEvent", id);
-                pointer.put(MakoEvent.COMMENTS_COL, updatedComments);
+                pointer.put(MakoEvent.COMMENTS_COL, currMakoEvent.getComments());
 
                 // TODO: comments not updated on parse.com.
                 // Save
                 pointer.saveInBackground(new SaveCallback() {
                     public void done(ParseException e) {
                         if (e == null) {
-                            // TODO: new comment not showing. keyboard not closed.
+                            // TODO: keyboard not closed.
                             // Saved successfully.
                             currMakoEvent.getComments().add(comment);
                             adapter.notifyDataSetChanged();
+                            newComment.setText("");
+                            InputMethodManager imm = (InputMethodManager) parent.getSystemService(
+                                    Context.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
                         } else {
                             // The save failed.
-                            Log.d("Update Comments", e.toString());
+                            currMakoEvent.getComments().remove(currMakoEvent.getComments().size() - 1);
+                            Log.d("Update Comments Failed", e.toString());
                         }
                     }
                 });

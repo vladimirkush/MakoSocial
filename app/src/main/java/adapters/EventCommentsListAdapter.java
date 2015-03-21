@@ -68,8 +68,10 @@ public class EventCommentsListAdapter extends BaseAdapter {
         }
 
         //assign values
-        holder.whoCommented.setText(eventComments.get(position).get("whoCommented"));
-        holder.theComment.setText(eventComments.get(position).get("theComment"));
+        String who = eventComments.get(position).get("whoCommented");
+        String what = eventComments.get(position).get("theComment");
+        holder.whoCommented.setText(who);
+        holder.theComment.setText(what);
 
         return row;
     }
