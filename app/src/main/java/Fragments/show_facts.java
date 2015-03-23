@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
@@ -20,7 +21,8 @@ public class show_facts extends Fragment {
 
     private View view;
     private ListView listView_facts;
-    EventFactsListAdapter listView_adapter;
+    private Button goto_url;
+    private EventFactsListAdapter listView_adapter;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
