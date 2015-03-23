@@ -25,8 +25,16 @@ import dbObjects.MakoEvent;
 
 public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>> {
 
-    public final static String PARSE_LOGCAT_TAG   = "Parse";
-    public final static String WIDGET_LOGCAT_TAG  = "widget";
+    private final String NAME_COL           = "Name";
+    private final String DESCRIPTION_COL    = "Description";
+    private final String NUM_LIKES_COL      = "NumLikes";
+    private final String START_DATE_COL     = "StartDate";
+    private final String RATING_COL         = "Rating";
+    private final String NUM_RATED_COL      = "numRated";
+    private final String PICTURE_COL        = "Picture";
+    private final String LINK_COL           = "Link";
+    private final String PARSE_LOGCAT_TAG   = "Parse";
+    private final String WIDGET_LOGCAT_TAG   = "widget";
 
     private Context context;
     private ArrayList<MakoEvent>    makoEventsList;
@@ -70,6 +78,7 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
                 mEvent.setName(i.getString(MakoEvent.NAME_COL));
                 mEvent.setRating((float)i.getDouble(MakoEvent.RATING_COL));
                 mEvent.setStartDate(i.getDate(MakoEvent.START_DATE_COL));
+                mEvent.setLink(i.getString(LINK_COL));
                 mEvent.setNumRated(i.getInt(MakoEvent.NUM_RATED_COL));
                 try {
                     mEvent.populateComments(i.getJSONArray(MakoEvent.COMMENTS_COL));

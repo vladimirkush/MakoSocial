@@ -38,6 +38,7 @@ public class MakoEvent {
     private String shortDescription;
     private ArrayList<HashMap<String, String>> comments;
     private ArrayList<MakoEventFact> facts;
+    private String link;
 
     public MakoEvent(){
         comments = new ArrayList<HashMap<String, String>>();
@@ -147,6 +148,14 @@ public class MakoEvent {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public int getNumComments(){
