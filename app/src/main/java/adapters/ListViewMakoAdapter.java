@@ -44,7 +44,7 @@ public class ListViewMakoAdapter extends BaseAdapter {
     static class ViewHolder {
         public TextView eventName;
         public TextView eventDescr;
-        public TextView likes;
+        public TextView facts;
         public TextView comments;
         public ImageView pic;
         public RatingBar ratingBar;
@@ -63,7 +63,7 @@ public class ListViewMakoAdapter extends BaseAdapter {
             //find elements
             holder.eventName = (TextView) row.findViewById(R.id.etEventName);
             holder.eventDescr = (TextView) row.findViewById(R.id.etEventDescription);
-            holder.likes = (TextView) row.findViewById(R.id.tvLikes);
+            holder.facts = (TextView) row.findViewById(R.id.tvFacts);
             holder.comments = (TextView) row.findViewById(R.id.tvComments);
             holder.pic = (ImageView) row.findViewById(R.id.ivMainPic);
             holder.ratingBar = (RatingBar) row.findViewById(R.id.rbRating);
@@ -75,7 +75,7 @@ public class ListViewMakoAdapter extends BaseAdapter {
         //assign values
         holder.eventName.setText(makoEvents.get(position).getName());
         holder.eventDescr.setText(makoEvents.get(position).getShortDescription());
-        holder.likes.setText(makoEvents.get(position).getLikes()+"");
+        holder.facts.setText(makoEvents.get(position).getLikes()+"");
         holder.pic.setImageBitmap(makoEvents.get(position).getPicture());
         holder.ratingBar.setRating(makoEvents.get(position).getRating());
 

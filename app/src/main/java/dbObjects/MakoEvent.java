@@ -10,7 +10,6 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class holds a row that represents a Mako event
@@ -33,6 +32,7 @@ public class MakoEvent {
     private Bitmap picture;
     private Date startDate;
     private int likes;
+    private int numFacts;
     private int numRated;
     private String description;
     private String shortDescription;
@@ -166,5 +166,13 @@ public class MakoEvent {
 
     public void addFact(MakoEventFact fact) {
         facts.add(fact);
+    }
+
+    public int getNumFacts() {
+        return numFacts;
+    }
+
+    public void setNumFacts(int numFacts) {
+        this.numFacts = numFacts;
     }
 }

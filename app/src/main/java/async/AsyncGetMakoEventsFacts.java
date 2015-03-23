@@ -2,25 +2,17 @@ package async;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.BaseAdapter;
 
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.ListViewMakoAdapter;
-import adapters.WifgetConfigListAdapter;
-import dataHolders.MakoListHolder;
 import dbObjects.MakoEvent;
 import dbObjects.MakoEventFact;
 
@@ -31,9 +23,10 @@ public class AsyncGetMakoEventsFacts extends AsyncTask<Void,Void,Boolean> {
     private ProgressDialog progressDialog;
     private BaseAdapter adapter;
 
-    public AsyncGetMakoEventsFacts(Context context, ArrayList<MakoEvent> list){
+    public AsyncGetMakoEventsFacts(Context context, ArrayList<MakoEvent> list, BaseAdapter adapter){
         this.context = context;
         this.makoEventsList = list;
+        this.adapter = adapter;
     }
 
     @Override
@@ -85,5 +78,13 @@ public class AsyncGetMakoEventsFacts extends AsyncTask<Void,Void,Boolean> {
 
     protected void onPostExecute(Boolean status) {
         progressDialog.dismiss();
+      //  for (mEvent);
+       // adapter.get
+    }
+
+    private int countFacts(int makoEventID){
+       int count=0;
+        return count;
+
     }
 }

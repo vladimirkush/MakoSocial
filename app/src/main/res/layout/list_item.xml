@@ -9,8 +9,8 @@
     <ImageView
         android:id="@+id/ivMainPic"
         android:adjustViewBounds="true"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
         android:scaleType="centerCrop"
         android:src="@drawable/default_pic"
         android:fadingEdge="vertical"/>
@@ -62,8 +62,8 @@
 
 
         <ImageView
-            android:id="@+id/ivLike"
-            android:src="@drawable/like_t"
+            android:id="@+id/ivFacts"
+            android:src="@drawable/mako_icons_facts_dark"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_weight="1"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="5"
-            android:id="@+id/tvLikes"
+            android:id="@+id/tvFacts"
             android:textSize="17sp"
             android:textColor="@android:color/darker_gray"
             android:layout_weight="1"
