@@ -3,10 +3,10 @@ package com.vj.makosocial;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,7 +20,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
+
 import java.util.ArrayList;
+
 import Fragments.comment_on_show;
 import Fragments.notify_widget;
 import Fragments.rate_show;
@@ -29,8 +34,6 @@ import adapters.DetailedViewPicAdapter;
 import animations.ZoomOutPageTransformer;
 import dataHolders.MakoListHolder;
 import dbObjects.MakoEvent;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState;
 
 public class DetailedViewActivity extends ActionBarActivity
         implements rate_show.OnFragmentInteractionListener,
@@ -165,6 +168,10 @@ public class DetailedViewActivity extends ActionBarActivity
         if (id == R.id.menu_action_share) {
             //setShareIntent(getShareIntent("stam1"));
             Log.d(LOG_TAG, "menu clicked item id: "+id);
+        }
+        else if(id == android.R.id.home){
+            Log.d(LOG_TAG, "up clicked");
+            finish();
         }
         //noinspection SimplifiableIfStatement
         //if (id == R.id.action_settings) {
