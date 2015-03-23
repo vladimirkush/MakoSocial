@@ -10,8 +10,6 @@ import com.vj.makosocial.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dbObjects.MakoEvent;
-
 public class EventCommentsListAdapter extends BaseAdapter {
 
     private ArrayList<HashMap<String,String>> eventComments = new ArrayList<HashMap<String,String>>();

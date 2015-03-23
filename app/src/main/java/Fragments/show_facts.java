@@ -8,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
-
-import adapters.EventCommentsListAdapter;
+import adapters.EventFactsListAdapter;
 import dbObjects.MakoEvent;
 
 public class show_facts extends Fragment {
@@ -62,7 +60,7 @@ public class show_facts extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_show_facts, container, false);
         listView_facts = (ListView) view.findViewById(R.id.list_of_facts);
-//        listView_adapter = new EventCommentsListAdapter(currMakoEvent.getComments(), getActivity().getBaseContext());
+        listView_adapter = new EventFactsListAdapter(currMakoEvent.getFacts(), getActivity().getBaseContext());
         listView_facts.setAdapter(listView_adapter);
 
         return view;

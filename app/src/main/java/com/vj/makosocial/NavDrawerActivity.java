@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import adapters.ListViewMakoAdapter;
 import async.AsyncGetMakoEvents;
+import async.AsyncGetMakoEventsFacts;
 import dbObjects.MakoEvent;
 
 public class NavDrawerActivity extends ActionBarActivity {
@@ -58,8 +59,11 @@ public class NavDrawerActivity extends ActionBarActivity {
 
         // download entities from Parse (asynctask)
         mEventList = new ArrayList<MakoEvent>();
-        AsyncGetMakoEvents async = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
-        async.execute();
+        AsyncGetMakoEvents asyncGetEvents = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
+        asyncGetEvents.execute();
+
+        AsyncGetMakoEventsFacts asyncGetFacts = new AsyncGetMakoEventsFacts(NavDrawerActivity.this, mEventList);
+        asyncGetFacts.execute();
 
         lvMakoEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

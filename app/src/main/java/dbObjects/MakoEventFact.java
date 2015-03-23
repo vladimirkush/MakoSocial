@@ -15,7 +15,9 @@ public class MakoEventFact  {
     public String URL;
 
     public MakoEventFact() {
-
+        this.content = "";
+        this.contentType = "";
+        this.URL = "";
     }
 
     public MakoEventFact(String factID, String makoEventID, String content, String contentType, String URL) {
@@ -54,5 +56,11 @@ public class MakoEventFact  {
 
     public String getURL() { return URL; }
 
-    public void setURL(String URL) { this.URL = URL; }
+    public void setURL(String URL) {
+        if (URL == null)
+            return;
+        if (URL.equals(""))
+            return;
+        this.URL = URL;
+    }
 }

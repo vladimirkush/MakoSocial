@@ -37,13 +37,17 @@ public class MakoEvent {
     private String description;
     private String shortDescription;
     private ArrayList<HashMap<String, String>> comments;
+    private ArrayList<MakoEventFact> facts;
 
     public MakoEvent(){
         comments = new ArrayList<HashMap<String, String>>();
+        facts = new ArrayList<MakoEventFact>();
     }
 
-    public MakoEvent(String id, String name, float rating, int numRated, Bitmap picture, Date startDate,
-                     int likes, String description, String shortDescription, ArrayList<HashMap<String, String>> comments) {
+    public MakoEvent(String id, String name, float rating,
+                     int numRated, Bitmap picture, Date startDate,
+                     int likes, String description, String shortDescription,
+                     ArrayList<HashMap<String, String>> comments, ArrayList<MakoEventFact> facts) {
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -53,6 +57,7 @@ public class MakoEvent {
         this.description = description;
         this.shortDescription = shortDescription;
         this.comments = comments;
+        this.facts = facts;
         this.numRated = numRated;
     }
 
@@ -108,6 +113,8 @@ public class MakoEvent {
         this.shortDescription = shortDescription;
     }
 
+    public ArrayList<MakoEventFact> getFacts() { return facts; }
+
     public ArrayList<HashMap<String, String>> getComments() {
         return comments;
     }
@@ -146,5 +153,9 @@ public class MakoEvent {
         if(comments!=null)
             return comments.size();
         return 0;
+    }
+
+    public void addFact(MakoEventFact fact) {
+        facts.add(fact);
     }
 }

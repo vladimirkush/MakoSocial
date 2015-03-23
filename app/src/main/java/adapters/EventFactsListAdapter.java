@@ -40,11 +40,9 @@ public class EventFactsListAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        public String factID;
-        public String makoEventID;
-        public String content;
+        public TextView content;
         public String contentType;
-        public String URL;
+        public TextView URL;
     }
 
     @Override
@@ -58,18 +56,18 @@ public class EventFactsListAdapter extends BaseAdapter {
             holder = new ViewHolder();
 
             //find elements in layout
-            holder.whoCommented = (TextView) row.findViewById(R.id.who_commented);
-            holder.theComment = (TextView) row.findViewById(R.id.the_comment);
+            holder.content = (TextView) row.findViewById(R.id.fact_content);
+            holder.URL = (TextView) row.findViewById(R.id.fact_url);
             row.setTag(holder);
         }else {
             holder = (ViewHolder) row.getTag();
         }
 
         //assign values to elements in layout
-        String who = eventComments.get(position).get("whoCommented");
-        String what = eventComments.get(position).get("theComment");
-        holder.whoCommented.setText(who);
-        holder.theComment.setText(what);
+        String content_str = eventFacts.get(position).getContent();
+        String url_str = eventFacts.get(position).getURL();
+        holder.content.setText(content_str);
+        holder.URL.setText(url_str);
 
         return row;
     }
