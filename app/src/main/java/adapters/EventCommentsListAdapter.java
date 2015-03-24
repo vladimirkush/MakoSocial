@@ -40,6 +40,7 @@ public class EventCommentsListAdapter extends BaseAdapter {
     static class ViewHolder {
         public TextView whoCommented;
         public TextView theComment;
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import com.vj.makosocial.R;
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class EventFactsListAdapter extends BaseAdapter {
         this.context = context;
         this.eventFacts = list;
         this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        int count = getCount();
+        count = 0;
     }
 
     @Override
@@ -43,6 +47,7 @@ public class EventFactsListAdapter extends BaseAdapter {
         public TextView content;
         public String contentType;
         public TextView URL;
+        public Button gotoUrl;
     }
 
     @Override
@@ -58,6 +63,7 @@ public class EventFactsListAdapter extends BaseAdapter {
             //find elements in layout
             holder.content = (TextView) row.findViewById(R.id.fact_content);
             holder.URL = (TextView) row.findViewById(R.id.fact_url);
+            holder.gotoUrl = (Button) row.findViewById(R.id.goto_url);
             row.setTag(holder);
         }else {
             holder = (ViewHolder) row.getTag();
@@ -67,7 +73,12 @@ public class EventFactsListAdapter extends BaseAdapter {
         String content_str = eventFacts.get(position).getContent();
         String url_str = eventFacts.get(position).getURL();
         holder.content.setText(content_str);
-        holder.URL.setText(url_str);
+        holder.URL.setText("More info at: "+url_str);
+
+        if (!url_str.equals("")) {
+            holder.URL.setVisibility(View.VISIBLE);
+            holder.gotoUrl.setVisibility(View.VISIBLE);
+        }
 
         return row;
     }

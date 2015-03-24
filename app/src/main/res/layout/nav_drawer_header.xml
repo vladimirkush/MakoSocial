@@ -5,6 +5,6 @@
     android:adjustViewBounds="true"
     android:orientation="vertical"
     android:scaleType="fitCenter"
-    android:src="@drawable/header_mako">
+    android:src="@drawable/header_mako_v2">
 
  </ImageView>
