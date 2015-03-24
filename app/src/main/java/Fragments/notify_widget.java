@@ -56,7 +56,6 @@ public class notify_widget extends Fragment {
     private DetailedViewActivity parentActivity;
     private MakoEvent currMakoEvent;
     private Button btnSubscribe;
-    private Button btnOpenWidget;
     private View view;
     //private boolean subscribed;
 
@@ -105,7 +104,6 @@ public class notify_widget extends Fragment {
         currMakoEvent = parentActivity.getCurrMakoEvent();
 
         btnSubscribe = (Button) view.findViewById(R.id.detview_bt_subscribe);
-        btnOpenWidget = (Button) view.findViewById(R.id.detview_bt_widget);
         btnSubscribe.setClickable(false);
 
         btnSubscribe.setOnClickListener(new View.OnClickListener() {

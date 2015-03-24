@@ -12,8 +12,8 @@
        >
 
        <Button
-           android:layout_width="220dp"
-           android:layout_height="60dp"
+           android:layout_width="240dp"
+           android:layout_height="80dp"
            android:id="@+id/detview_bt_subscribe"
            android:text="Checking subscription..."
            android:layout_gravity="center"
@@ -21,15 +21,7 @@
            android:layout_marginBottom="20dp"
            />
 
-       <Button
-           android:layout_marginTop="20dp"
-           android:layout_width="220dp"
-           android:layout_height="60dp"
-           android:id="@+id/detview_bt_widget"
-           android:text="Set up a widget"
-           android:layout_gravity="center"
-           android:background="@drawable/btn_state_selector"
-           />
+
 
 
 
