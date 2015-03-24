@@ -78,13 +78,8 @@ public class AsyncGetMakoEventsFacts extends AsyncTask<Void,Void,Boolean> {
 
     protected void onPostExecute(Boolean status) {
         progressDialog.dismiss();
-      //  for (mEvent);
-       // adapter.get
+        adapter.notifyDataSetChanged();
     }
 
-    private int countFacts(int makoEventID){
-       int count=0;
-        return count;
 
-    }
 }

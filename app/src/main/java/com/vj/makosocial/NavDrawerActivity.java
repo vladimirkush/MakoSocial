@@ -35,6 +35,7 @@ public class NavDrawerActivity extends ActionBarActivity {
     private ShareActionProvider mShareActionProvider;
     private ListView            lvMakoEvents;
     ArrayList<MakoEvent>        mEventList;
+    ListViewMakoAdapter         adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +54,15 @@ public class NavDrawerActivity extends ActionBarActivity {
         lvMakoEvents = (ListView) findViewById(R.id.lvMakoEvents);
 
         //set adapter
-        ListViewMakoAdapter adapter = new ListViewMakoAdapter(this);
+        adapter = new ListViewMakoAdapter(this);
         lvMakoEvents.setAdapter(adapter);
 
-        // download entities from Parse (asynctask)
+        // download entities from Parse (asyncronic)
         mEventList = new ArrayList<MakoEvent>();
         AsyncGetMakoEvents asyncGetEvents = new AsyncGetMakoEvents(NavDrawerActivity.this,mEventList,adapter);
         asyncGetEvents.execute();
 
-        AsyncGetMakoEventsFacts asyncGetFacts = new AsyncGetMakoEventsFacts(NavDrawerActivity.this, mEventList);
+        AsyncGetMakoEventsFacts asyncGetFacts = new AsyncGetMakoEventsFacts(NavDrawerActivity.this, mEventList, adapter);
         asyncGetFacts.execute();
 
         lvMakoEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,6 +74,12 @@ public class NavDrawerActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        adapter.notifyDataSetChanged();
+        super.onResume();
     }
 
     @Override
@@ -93,17 +100,9 @@ public class NavDrawerActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         //if (id == R.id.action_settings) {
         // return true;
-        //}
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -116,19 +115,7 @@ public class NavDrawerActivity extends ActionBarActivity {
         }
     }
 
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
-        if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(shareIntent);
-        }
-    }
 
-    private Intent getShareIntent( String url) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-        shareIntent.setType("text/plain");
-        return shareIntent;
-    }
 
 
     private Drawer.Result getDrawerResult(){

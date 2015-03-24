@@ -74,12 +74,13 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
                 mEvent.setId(i.getObjectId());
                 mEvent.setDescription(i.getString(MakoEvent.DESCRIPTION_COL));
                 mEvent.setShortDescription(i.getString(MakoEvent.SHORD_DESC_COL));
-                mEvent.setLikes(i.getInt(MakoEvent.NUM_LIKES_COL));
+               // mEvent.setLikes(i.getInt(MakoEvent.NUM_LIKES_COL));
                 mEvent.setName(i.getString(MakoEvent.NAME_COL));
                 mEvent.setRating((float)i.getDouble(MakoEvent.RATING_COL));
                 mEvent.setStartDate(i.getDate(MakoEvent.START_DATE_COL));
                 mEvent.setLink(i.getString(LINK_COL));
                 mEvent.setNumRated(i.getInt(MakoEvent.NUM_RATED_COL));
+                mEvent.setChannel(i.getString(MakoEvent.CHANNEL));
                 try {
                     mEvent.populateComments(i.getJSONArray(MakoEvent.COMMENTS_COL));
                 } catch (JSONException e) {

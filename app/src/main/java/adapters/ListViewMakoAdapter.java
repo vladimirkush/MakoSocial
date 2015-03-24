@@ -8,8 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import com.vj.makosocial.R;
+
 import java.util.ArrayList;
+
 import dbObjects.MakoEvent;
 
 public class ListViewMakoAdapter extends BaseAdapter {
@@ -75,9 +78,10 @@ public class ListViewMakoAdapter extends BaseAdapter {
         //assign values
         holder.eventName.setText(makoEvents.get(position).getName());
         holder.eventDescr.setText(makoEvents.get(position).getShortDescription());
-        holder.facts.setText(makoEvents.get(position).getLikes()+"");
+        holder.facts.setText(makoEvents.get(position).getNumFacts()+"");
         holder.pic.setImageBitmap(makoEvents.get(position).getPicture());
         holder.ratingBar.setRating(makoEvents.get(position).getRating());
+        holder.comments.setText(makoEvents.get(position).getNumComments()+"");
 
 
         return row;

@@ -25,20 +25,21 @@ public class MakoEvent {
     public final static String PICTURE_COL        = "Picture";
     public final static String COMMENTS_COL       = "CommentsArr";
     public final static String SHORD_DESC_COL     = "ShortDescription";
+    public final static String CHANNEL            = "channel";
 
     private String id;
     private String name;
     private float rating;
     private Bitmap picture;
     private Date startDate;
-    private int likes;
-    private int numFacts;
     private int numRated;
     private String description;
     private String shortDescription;
+    private String link;
+    private String channel;
     private ArrayList<HashMap<String, String>> comments;
     private ArrayList<MakoEventFact> facts;
-    private String link;
+
 
     public MakoEvent(){
         comments = new ArrayList<HashMap<String, String>>();
@@ -54,7 +55,6 @@ public class MakoEvent {
         this.rating = rating;
         this.picture = picture;
         this.startDate = startDate;
-        this.likes = likes;
         this.description = description;
         this.shortDescription = shortDescription;
         this.comments = comments;
@@ -88,14 +88,6 @@ public class MakoEvent {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
     public String getDescription() {
@@ -168,11 +160,15 @@ public class MakoEvent {
         facts.add(fact);
     }
 
-    public int getNumFacts() {
-        return numFacts;
+    public int getNumFacts(){
+        return facts.size();
     }
 
-    public void setNumFacts(int numFacts) {
-        this.numFacts = numFacts;
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 }

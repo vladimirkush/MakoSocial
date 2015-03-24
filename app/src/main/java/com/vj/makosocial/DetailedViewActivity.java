@@ -42,12 +42,12 @@ public class DetailedViewActivity extends ActionBarActivity
         notify_widget.OnFragmentInteractionListener {
 
     private static String POS_TAG = "position";
-    private Toolbar toolbar;
-    private ArrayList<MakoEvent> mEvents;
-    private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
-    private int clickedPos;
-    private Intent incIntent;
+    private Toolbar                 toolbar;
+    private ArrayList<MakoEvent>    mEvents;
+    private ViewPager               viewPager;
+    private PagerAdapter            pagerAdapter;
+    private int                     clickedPos;
+    private Intent                  incIntent;
     private ActionBar aBar;
     private ShareActionProvider mShareActionProvider;
 

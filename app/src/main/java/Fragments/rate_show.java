@@ -10,15 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 
