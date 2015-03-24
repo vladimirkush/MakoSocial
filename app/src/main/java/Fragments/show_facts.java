@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+
 import com.vj.makosocial.DetailedViewActivity;
 import com.vj.makosocial.R;
+
 import adapters.EventFactsListAdapter;
 import dbObjects.MakoEvent;
 
@@ -24,6 +26,7 @@ public class show_facts extends Fragment {
     private Button goto_url;
     private EventFactsListAdapter listView_adapter;
 
+    private static final String LOG_TAG = "fact";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -65,6 +68,9 @@ public class show_facts extends Fragment {
         listView_adapter = new EventFactsListAdapter(currMakoEvent.getFacts(), getActivity().getBaseContext());
         listView_facts.setAdapter(listView_adapter);
 
+       // goto_url = (Button) view.findViewById(R.id.goto_url);
+
+
         return view;
     }
 
@@ -96,5 +102,7 @@ public class show_facts extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+
 
 }

@@ -362,5 +362,9 @@ public class DetailedViewActivity extends ActionBarActivity
         return shareIntent;
     }
 
+    public void onClickedButton(View v){
+        Log.d(LOG_TAG,"in on click");
+
+    }
 
 }

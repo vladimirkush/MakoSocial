@@ -27,6 +27,7 @@
         android:visibility="gone"
         android:textColor="@color/abc_secondary_text_material_dark"
         android:text="Take Me There!"
-        android:background="#495a65" />
+        android:background="#495a65"
+        android:onClick="onClickedButton"/>
 
 </LinearLayout>
