@@ -22,7 +22,7 @@ public class MakoEvent {
     public final static String START_DATE_COL     = "StartDate";
     public final static String RATING_COL         = "Rating";
     public final static String NUM_RATED_COL      = "numRated";
-    public final static String PICTURE_COL        = "Picture";
+    public final static String PICTURE_COL        = "LargePicture";
     public final static String COMMENTS_COL       = "CommentsArr";
     public final static String SHORD_DESC_COL     = "ShortDescription";
     public final static String CHANNEL            = "channel";

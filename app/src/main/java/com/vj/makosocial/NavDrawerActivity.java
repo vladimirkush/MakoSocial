@@ -119,9 +119,6 @@ public class NavDrawerActivity extends ActionBarActivity {
 
 
     private Drawer.Result getDrawerResult(){
-        /* Using Mike Penz material design library:
-        * https://github.com/mikepenz/MaterialDrawer
-        */
 
         Drawer.Result dr = new Drawer()
                 .withActivity(this)
@@ -129,36 +126,26 @@ public class NavDrawerActivity extends ActionBarActivity {
                 .withActionBarDrawerToggle(true)
                 .withHeader(R.layout.nav_drawer_header)
                 .addDrawerItems(
-                        //"List view"
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_list_view)
+                        new PrimaryDrawerItem().withName("Our Shows")
                                 .withIcon(FontAwesome.Icon.faw_list)
                                 .withIdentifier(1),
-                        //"Full view"
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_full_view)
+                        new PrimaryDrawerItem().withName("TV News (in dev)")
                                 .withIcon(FontAwesome.Icon.faw_square_o)
                                 .withIdentifier(2),
-
-                        //Divider line
                         new DividerDrawerItem(),
 
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom1)
-                                .withIcon(FontAwesome.Icon.faw_arrow_circle_right)
+                        new PrimaryDrawerItem().withName("Tell Friends (in dev)")
+                                .withIcon(FontAwesome.Icon.faw_user_plus)
                                 .withIdentifier(3),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom2)
-                                .withIcon(FontAwesome.Icon.faw_arrow_circle_left)
+                        new PrimaryDrawerItem().withName("My Schedule (in dev)")
+                                .withIcon(FontAwesome.Icon.faw_calendar)
                                 .withIdentifier(4),
-                        //new SectionDrawerItem()
-                        //.withName(R.string.drawer_item_settings),
-
                         //Divider line
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem()
+                                .withIcon(FontAwesome.Icon.faw_sign_out)
                                 .withName("Logout")
-                                .withIdentifier(0),
-                        new SecondaryDrawerItem()
-                                .withName(R.string.drawer_item_help)
-                                .withIcon(FontAwesome.Icon.faw_question_circle)
-                                .withIdentifier(5)
+                                .withIdentifier(0)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -168,14 +155,15 @@ public class NavDrawerActivity extends ActionBarActivity {
                             Log.d("Parse", "Drawer NULL ");
                             return;
                         }
-                        if (drawerItem.getIdentifier() == 0) {
+                        if (drawerItem.getIdentifier() == 0) {  //clicked "Logout"
                             ParseUser.logOut();
                             Intent i = new Intent(NavDrawerActivity.this, Dispatcher.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(i);
-                        } else
+                        } else {
                             Log.d("Parse", "Drawer id " + drawerItem.getIdentifier());
+                        }
                     }
                 }).build();
         return dr;

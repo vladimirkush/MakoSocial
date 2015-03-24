@@ -31,7 +31,7 @@ public class AsyncGetMakoEvents extends AsyncTask<Void,Void,ArrayList<MakoEvent>
     private final String START_DATE_COL     = "StartDate";
     private final String RATING_COL         = "Rating";
     private final String NUM_RATED_COL      = "numRated";
-    private final String PICTURE_COL        = "Picture";
+    private final String PICTURE_COL        = "LargePicture";
     private final String LINK_COL           = "Link";
     private final String PARSE_LOGCAT_TAG   = "Parse";
     private final String WIDGET_LOGCAT_TAG   = "widget";
